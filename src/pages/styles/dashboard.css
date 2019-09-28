@@ -1,0 +1,64 @@
+a:visited {
+    color: white;
+}
+
+.sidebar {
+    background-color: rgba(83, 83, 83, 0.699);
+    padding: 2rem 0 !important;
+}
+
+.dashboard {
+    background-image: url('cell-phone-close-up-contemporary-905873.jpg');
+    background-position: -25vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.body {
+    background-color: rgb(255, 255, 255);
+}
+
+.btn.btn-link {
+    color: white !important;
+}
+
+.btn.btn-link.my:hover {
+    color: rgb(247, 173, 160) !important;
+}
+
+.sidebar a{
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+.sidebar a:hover,
+.sidebar a:focus {
+    color: tomato;
+}
+
+#new-project {
+    padding: 0.5rem;
+}
+.todo-item {
+    border-bottom: 0.5px solid rgba(211, 211, 211, 0.582);
+    margin: 0 2rem;
+    font-size: 16px;
+    font-weight: 500;
+    /* box-shadow: 1px 2px 0px 0px rgba(211, 211, 211, 0.603); */
+}
+.todo-item.checked {
+    color: lightgray;
+}
+
+
+.todo-item button {
+    font-size: 1.2rem;
+}
+
+button.priority:hover, 
+button.priority:focus {
+    background-color: rgb(238, 236, 236);
+}
