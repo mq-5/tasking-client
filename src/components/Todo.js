@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Button, FormGroup, Label, Input } from 'reactstrap'
-import SetTodo from './SetTodo';
+import { Button, FormGroup, Label, Input, Badge } from 'reactstrap';
+import { bold } from 'ansi-colors';
 
 function TodoItem(props) {
     let todo = props.todo;
-    console.log('TODOITEM', props)
+    // console.log('TODOITEM', props)
     const toggleTodo = async (id) => {
         if (!todo.completed) {
             const resp = await fetch(`${props.URL}todos/complete/${id}`, {
@@ -64,13 +64,22 @@ function TodoItem(props) {
                         style={{ color: todo.completed ? 'lightgray' : 'grey', fontSize: '1.2rem' }}
                         aria-hidden="true"></i>
                 </Button>
-                {todo.content}
+                {todo.content}{' '}
+                {todo.priority ? <small >
+                    <i style={{ color: todo.priority.color, margin: '1rem' }} className="fa fa-flag" aria-hidden="true"></i> </small> : null}
+                <br />
+                <small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem' }}>
+                    <i className="nc-icon nc-box mx-2" /> {todo.project}
+                </small>
+                {todo.labels.map(label =>
+                    <Badge href="#" pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
+                        {label.name}</Badge>
+                )}
             </FormGroup>
             <div className='ml-auto'>
                 <Button className='ml-2 p-0' color='neutral' onClick={() => deleteTodo(todo.id)}>
                     <i className="fa fa-trash-o" aria-hidden="true"></i>
                 </Button>
-                <SetTodo {...props} {...props.data} className='ml-2 p-0' color='neutral' action='edit' />
             </div>
         </div>
     )

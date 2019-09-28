@@ -1,0 +1,87 @@
+import React, { useState } from "react";
+// reactstrap components
+import { Button, FormGroup, Input, Modal, Form } from "reactstrap";
+
+const colors = ['#51cbce', '#2ba9cd', '#ff8f5e', '#fbc658', '#f5593d', '#f33816', '#c8c8c8']
+function NewLabel(props) {
+    console.log(props)
+    const [toggleModal, setToggleModal] = useState(false);
+    const [name, setName] = useState()
+    const [color, setColor] = useState()
+
+    const createLabel = async (e) => {
+        e.preventDefault()
+        if (colors.includes(color)) {
+            let label = { name, color }
+            const resp = await fetch(`${props.URL}labels/new`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${props.token}`
+                },
+                body: JSON.stringify(label)
+            })
+            const data = await resp.json()
+            console.log('LABELLLLL', data)
+            if (data.status.ok) {
+                setToggleModal(false)
+                props.fetch()
+            } else {
+                alert('Error!')
+            }
+        } else {
+            alert('Color not valid! ' + color)
+        }
+    }
+    return (
+        <>
+            <Button color="neutral" id='new-label' block className='mx-2'
+                type="button" onClick={() => setToggleModal(true)}>
+                New Label <i class="fa fa-plus" aria-hidden="true"></i>
+            </Button>
+            <Modal isOpen={toggleModal} toggle={() => setToggleModal(false)}>
+                <div className="modal-header">
+                    <button
+                        aria-label="Close"
+                        className="close"
+                        data-dismiss="modal"
+                        type="button"
+                        onClick={() => setToggleModal(false)}
+                    >
+                        <span aria-hidden={true}>×</span>
+                    </button>
+                    <h6 className="modal-title">
+                        New Label
+                    </h6>
+                </div>
+                <div className="modal-body">
+                    <Form onSubmit={e => createLabel(e)}>
+                        <FormGroup>
+                            <label>Name</label>
+                            <Input placeholder="Name" type="text" onChange={e => setName(e.target.value)} required />
+                        </FormGroup>
+                        <FormGroup>
+                            <label>Color</label>
+                            <Input placeholder="Color" type="select"
+                                defaultValue={colors[0]}
+                                onChange={e => setColor(e.target.value)} required
+                                style={{ color: color }}
+                                className='d-flex'>
+                                {colors.map(c => <option style={{ color: c }} value={c}>
+                                    Color {c}
+                                    {/* <i class="fa fa-check-circle" aria-hidden="true" style={{ color: c }}></i> */}
+                                </option>)}
+                            </Input>
+                        </FormGroup>
+                        <Button block className="btn-round" color="warning" type="submit">
+                            Create
+                        </Button>
+                    </Form>
+                </div>
+            </Modal>
+        </>
+    );
+}
+
+export default NewLabel;

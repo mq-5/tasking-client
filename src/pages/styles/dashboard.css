@@ -3,8 +3,12 @@ a:visited {
 }
 
 .sidebar {
-    background-color: rgba(83, 83, 83, 0.699);
+    background-color: rgba(121, 120, 120, 0.856);
     padding: 2rem 0 !important;
+}
+
+.sidebar .nav-link {
+    padding: 0.5rem 1rem;
 }
 
 .dashboard {
@@ -43,16 +47,18 @@ a:visited {
     padding: 0.5rem;
 }
 .todo-item {
-    border-bottom: 0.5px solid rgba(211, 211, 211, 0.582);
+    border-bottom: 0.5px solid rgba(117, 117, 117, 0.637);
     margin: 0 2rem;
     font-size: 16px;
     font-weight: 500;
-    /* box-shadow: 1px 2px 0px 0px rgba(211, 211, 211, 0.603); */
 }
-.todo-item.checked {
-    color: lightgray;
+.todo-item.checked * {
+    opacity: .7;
 }
 
+.todo-item button:hover {
+    color: black !important;
+}
 
 .todo-item button {
     font-size: 1.2rem;
@@ -61,4 +67,8 @@ a:visited {
 button.priority:hover, 
 button.priority:focus {
     background-color: rgb(238, 236, 236);
+}
+
+hr {
+    /* margin: 0 !important; */
 }

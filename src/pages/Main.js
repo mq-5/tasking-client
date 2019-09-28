@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import logout from '../components/LogOut';
-import NewTodo from '../components/SetTodo';
+import NewTodo from '../components/NewTodo';
 import NewProject from '../components/NewProject';
+import NewLabel from 'components/NewLabel';
 import Todos from './Todos';
+
 
 import {
 	UncontrolledCollapse,
@@ -66,7 +68,7 @@ function NavBar(props) {
 								<Input placeholder="Search tasks..." type="text" onChange={e => setKey(e.target.value)} />
 							</Form>
 							<NavItem>
-								<NewTodo {...props} action='add' className='btn-link my' />
+								<NewTodo {...props} className='btn-link my' />
 							</NavItem>
 							<NavItem style={{ color: 'white' }}>{props.user.name}</NavItem>
 							<NavItem >
@@ -86,13 +88,6 @@ function NavBar(props) {
 	);
 }
 
-const Hello = (props) => {
-	console.log(props, 'helo')
-	return (
-		<div>hi</div>
-
-	)
-}
 
 class Main extends React.Component {
 	constructor(props) {
@@ -124,8 +119,8 @@ class Main extends React.Component {
 	}
 
 	render() {
-		const { default_project, projects } = { ...this.state.data }
-		console.log('MAIN', default_project, projects, this.state)
+		const { default_project, projects, labels } = { ...this.state.data }
+		// console.log('MAIN', default_project, projects, this.state)
 		if (this.state.loading) {
 			return <div style={{ padding: '45vh 50vw' }}>
 				<Spinner style={{ width: '3rem', height: '3rem' }} color='danger' />
@@ -143,6 +138,8 @@ class Main extends React.Component {
 								<Link to="/main/today/">Today</Link>
 							</NavLink>
 							<hr />
+							<h5 className='text-white text-center'>Projects</h5>
+
 							{projects.filter(p => p.id !== default_project.id).map(p => {
 								return <>
 									<NavLink>
@@ -150,7 +147,19 @@ class Main extends React.Component {
 									</NavLink> </>
 							})}
 							<NavLink>
-								<NewProject {...this.props} />
+								<NewProject {...this.props} fetch={this.fetchData} />
+							</NavLink>
+							<hr />
+							<h5 className='text-white text-center'>Labels</h5>
+							{labels.map(l => {
+								return <NavLink>
+									<Link to='#' style={{ color: l.color }} >
+										{l.name} <i class="fa fa-bookmark" aria-hidden="true"></i>
+									</Link>
+								</NavLink>
+							})}
+							<NavLink>
+								<NewLabel {...this.props} fetch={this.fetchData} />
 							</NavLink>
 						</Col>
 						<Col className='body' md={10} sm={9} xs={12} >

@@ -1,4 +1,8 @@
 import React, { } from "react";
+
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 import {
     Button, Input,
     UncontrolledTooltip,
@@ -7,9 +11,22 @@ import {
     FormGroup, Label
 } from "reactstrap";
 
-function Label1(props) {
-    const labels = props.labels
-    console.log('labellll', labels)
+const animatedComponents = makeAnimated();
+
+function MultiSelect(props) {
+    return (
+        <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            onChange={e => { props.setLabels(e ? e.map(item => item.value) : []) }}
+            options={props.options}
+        />
+    );
+}
+function LaBel(props) {
+    const { labelList, labels } = { ...props }
+    console.log('labellll', labelList)
     return (
         <div>
             <Button type="button" color='neutral' id="tag" data-toggle='popover' >
@@ -26,9 +43,9 @@ function Label1(props) {
                 className="popover-primary"
             >
                 <PopoverHeader>Labels</PopoverHeader>
-                <PopoverBody style={{ minWidth: '8rem' }}>
-                    <Input type="select" className='selectpicker' multiple
-                        onChange={e => props.setLabelId(e.target.value)}>
+                <PopoverBody style={{ minWidth: '10rem', textAlign: 'left' }}>
+                    {/* <Input type="select" className='selectpicker' multiple
+                        onChange={e => { props.setLabels(labelList.concat(e.target.value)) }}>
                         {labels.map(label => {
                             return <option
                                 value={label.id}
@@ -36,22 +53,13 @@ function Label1(props) {
                                 {label.name}
                             </option>
                         })}
-                    </Input>
-                    {labels.map(label => {
-                        return <FormGroup check>
-                            <Label check>
-                                <Input type="checkbox" onChange={e => console.log(e.target.checked)} />{' '}
-                                {label.name}
-                                <span className="form-check-sign">
-                                    <span className="check"></span>
-                                </span>
-                            </Label>
-                        </FormGroup>
-                    })}
+                    </Input> */}
+                    <MultiSelect options={labels.map(item => { return { value: item.id, label: item.name } })} setLabels={props.setLabels} />
                 </PopoverBody>
             </UncontrolledPopover>
         </div>
     );
 }
 
-export default Label1;
+export default LaBel;
+

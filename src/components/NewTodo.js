@@ -6,29 +6,30 @@ import {
 import Datetime from 'react-datetime';
 import moment from "moment";
 
+
 import Priority from './Priority'
 import Label from './Label'
 import Project from './Project'
 
 
-function SetTodo(props) {
-	const { default_project, action } = { ...props }
-
+function NewTodo(props) {
+	let { default_project } = { ...props }
+	// console.log('SETTODOO1111', props)
 	const [modalToggle, setModalToggle] = useState(false);
 	const [content, setContent] = useState()
 	const [dueTime, setDueTime] = useState(null)
 	const [project, setProjectId] = useState(default_project.id)
-	const [label, setLabelId] = useState(null)
+	const [labelList, setLabels] = useState([])
 	const [priority, setPriorityId] = useState()
 
-	console.log('SETTODOOOOO', props)
 	const postTodo = async () => {
+		// console.log('SETTODOOOOO', priority)
 		if (dueTime > moment()) {
 			let todo = {
 				content,
 				due_time: dueTime.toISOString(),
 				project_id: project,
-				label,
+				labelList,
 				priority
 			}
 			const resp = await fetch(`${props.URL}todos/new`, {
@@ -51,9 +52,6 @@ function SetTodo(props) {
 		}
 	}
 
-	const editTodo = async () => {
-		console.log('ediiting.....')
-	}
 	return (
 		<>
 			<Button
@@ -61,7 +59,7 @@ function SetTodo(props) {
 				type="button"
 				onClick={() => setModalToggle(true)}
 			>
-				{action === 'add' ? <i className="nc-icon nc-simple-add" /> : <i className="fa fa-edit" aria-hidden="true"></i>}
+				<i className="nc-icon nc-simple-add" />
 			</Button>
 			<Modal
 				isOpen={modalToggle} className='modal-lg'
@@ -78,34 +76,33 @@ function SetTodo(props) {
 					>
 						<span aria-hidden={true}>×</span>
 					</button>
-					<h6 className="text-muted">{action === 'add' ? 'new task' : 'edit task'}</h6>
+					<h6 className="text-muted">add task</h6>
 				</div>
 				<div className="modal-body">
 					<Form onSubmit={(e) => {
 						e.preventDefault();
-						if (action === 'add') {
-							postTodo()
-						} else {
-							editTodo()
-						}
+						postTodo()
 					}}>
 						<div className="form-row">
 							<FormGroup className="col-md-9">
 								<label>Content</label>
-								<Input type="text" placeholder="Your task..." maxLength={256} required={true}
+								<Input type="text" placeholder="Your task..."
+									maxLength={256} required={true}
 									onChange={e => { setContent(e.target.value); console.log('content', e.target.value) }} />
 							</FormGroup>
 							<FormGroup className="col-md-3">
 								<label>Due Date</label>
 								<Datetime
-									inputProps={{ placeholder: "Deadline", style: { width: '10rem' }, valid: dueTime > moment() }}
+									inputProps={{
+										placeholder: "Deadline", style: { width: '10rem' }, valid: dueTime > moment()
+									}}
 									onChange={(e) => { if (e._d) setDueTime(e._d); console.log('helllo date', e._d > moment()) }}
 								/>
 							</FormGroup>
 						</div>
 						<div className='form-row'>
 							<Priority {...props} setPriorityId={setPriorityId} />
-							<Label {...props} setLabelId={setLabelId} />
+							<Label {...props} setLabels={setLabels} labelList={labelList} />
 							<Project {...props} setProjectId={setProjectId} />
 							<Button color="danger" type='submit' className='ml-auto mr-3'>
 								Submit
@@ -119,4 +116,4 @@ function SetTodo(props) {
 	);
 }
 
-export default SetTodo;
+export default NewTodo;
