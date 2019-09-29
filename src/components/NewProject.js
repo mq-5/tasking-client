@@ -51,7 +51,7 @@ function NewProject(props) {
                     <Form onSubmit={e => createProject(e)}>
                         <FormGroup>
                             <label>Name</label>
-                            <Input placeholder="Name" type="text" onChange={e => setName(e.target.value)} required />
+                            <Input placeholder="Name" type="text" onChange={e => setName(e.target.value)} maxLength={64} required />
                         </FormGroup>
                         <Button block className="btn-round" color="warning" type="submit">
                             Create

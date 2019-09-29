@@ -4,7 +4,7 @@ import TodoItem from 'components/Todo';
 function Todos(props) {
 	const project = props.match.params.project;
 	const data = props.data;
-	console.log('tood', props, project);
+	// console.log('tood', props, project);
 	let todos, header;
 	if (project) {
 		todos = data.projects.filter(p => p.name.toLowerCase() === project.toLowerCase())[0].todos;

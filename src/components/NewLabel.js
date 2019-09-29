@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 // reactstrap components
 import { Button, FormGroup, Input, Modal, Form } from "reactstrap";
+import ColorSelect from "./ColorDotSelect";
 
 const colors = ['#51cbce', '#2ba9cd', '#ff8f5e', '#fbc658', '#f5593d', '#f33816', '#c8c8c8']
 function NewLabel(props) {
-    console.log(props)
     const [toggleModal, setToggleModal] = useState(false);
     const [name, setName] = useState()
     const [color, setColor] = useState()
@@ -36,7 +36,7 @@ function NewLabel(props) {
     }
     return (
         <>
-            <Button color="neutral" id='new-label' block className='mx-2'
+            <Button color="neutral" id='new-label' className='mx-2'
                 type="button" onClick={() => setToggleModal(true)}>
                 New Label <i class="fa fa-plus" aria-hidden="true"></i>
             </Button>
@@ -59,20 +59,21 @@ function NewLabel(props) {
                     <Form onSubmit={e => createLabel(e)}>
                         <FormGroup>
                             <label>Name</label>
-                            <Input placeholder="Name" type="text" onChange={e => setName(e.target.value)} required />
+                            <Input placeholder="Name" type="text" onChange={e => setName(e.target.value)} maxLength={64} required />
                         </FormGroup>
                         <FormGroup>
                             <label>Color</label>
-                            <Input placeholder="Color" type="select"
+                            {/* <Input placeholder="Color" type="select"
                                 defaultValue={colors[0]}
                                 onChange={e => setColor(e.target.value)} required
                                 style={{ color: color }}
                                 className='d-flex'>
                                 {colors.map(c => <option style={{ color: c }} value={c}>
                                     Color {c}
-                                    {/* <i class="fa fa-check-circle" aria-hidden="true" style={{ color: c }}></i> */}
                                 </option>)}
-                            </Input>
+                            </Input> */}
+                            <ColorSelect options={colors.map(c => { return { color: c, label: c, value: c } })}
+                                onChange={e => { setColor(e.value); console.log(color) }} />
                         </FormGroup>
                         <Button block className="btn-round" color="warning" type="submit">
                             Create

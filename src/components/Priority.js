@@ -6,10 +6,10 @@ import {
     PopoverBody, PopoverHeader
 } from "reactstrap";
 
+import ColorSelect from './ColorDotSelect'
 
 function Priority(props) {
     const priorities = [...props.priorities].sort((p1, p2) => p1.order - p2.order)
-
     return (
         <div>
             <Button type="button" color='neutral' id="priority">
@@ -25,15 +25,18 @@ function Priority(props) {
                 className="popover-primary"
             >
                 <PopoverHeader>Priority</PopoverHeader>
-                <PopoverBody className='d-flex'>
-                    {priorities.map(p => <>
+                <PopoverBody className='' style={{ minWidth: '10rem' }}>
+                    {/* {priorities.map(p => <>
                         <Button color='neutral' type='button' className='p-1 priority' id={`p-${p.id}`}
                             onClick={() => props.setPriorityId(p.id)} >
                             <i style={{ color: `${p.color}`, fontSize: '1rem' }} className="fa fa-flag" aria-hidden="true"></i>
                         </Button>
                         <UncontrolledTooltip placement="bottom" target={`p-${p.id}`}>
                             Priority {p.order}
-                        </UncontrolledTooltip></>)}
+                        </UncontrolledTooltip></>)} */}
+                    <ColorSelect options={priorities.map(p => { return { color: p.color, label: `Priority ${p.order}`, value: p.id } })}
+                        defaultValue={props.defaultValue}
+                        onChange={e => props.setPriorityId(e.value)} />
                 </PopoverBody>
             </UncontrolledPopover>
         </div>
@@ -42,3 +45,6 @@ function Priority(props) {
 
 
 export default Priority;
+
+
+

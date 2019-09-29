@@ -17,7 +17,8 @@ import {
 	Navbar,
 	NavItem,
 	NavLink,
-	Nav, Row, Col, Spinner
+	Nav, Row, Col, Spinner,
+	Card, CardBody
 } from "reactstrap";
 import './styles/dashboard.css'
 
@@ -40,24 +41,27 @@ function NavBar(props) {
 				/>
 			) : null}
 			<Navbar color="danger" expand="lg" className="sticky-top">
-				<NavbarBrand href="/">
-					Todo List
+				<div className="navbar-translate">
+					<NavbarBrand href="/">
+						Todo List
 				</NavbarBrand>
-				<button
-					className="navbar-toggler"
-					id="navbarTogglerDemo02"
-					type="button"
-					onClick={() => {
-						document.documentElement.classList.toggle("nav-open");
-						setBodyClick(true);
-					}}
-				>
-					<span className="navbar-toggler-bar bar1" />
-					<span className="navbar-toggler-bar bar2" />
-					<span className="navbar-toggler-bar bar3" />
-				</button>
+					<button
+						className="navbar-toggler"
+						id="navbarTogglerDemo02"
+						type="button"
+						onClick={() => {
+							document.documentElement.classList.toggle("nav-open");
+							setBodyClick(true);
+						}}
+					>
+						<span className="navbar-toggler-bar bar1" />
+						<span className="navbar-toggler-bar bar2" />
+						<span className="navbar-toggler-bar bar3" />
+					</button>
+				</div>
 				<UncontrolledCollapse navbar toggler="#navbarTogglerDemo02">
-					<Nav className="mr-auto mt-2 mt-lg-0" navbar>
+					<Nav className="ml-auto mt-2 mt-lg-0" navbar>
+						<NavItem style={{ color: 'white' }}>{props.user.name}</NavItem>
 					</Nav>
 					<Form className="form-inline ml-auto" style={{ listStyleType: "none" }} >
 						<FormGroup className="has-white">
@@ -68,20 +72,19 @@ function NavBar(props) {
 								<Input placeholder="Search tasks..." type="text" onChange={e => setKey(e.target.value)} />
 							</Form>
 							<NavItem>
-								<NewTodo {...props} className='btn-link my' />
 							</NavItem>
-							<NavItem style={{ color: 'white' }}>{props.user.name}</NavItem>
+							<NewTodo {...props} className='btn-link my' />
+
 							<NavItem >
 								<Button
 									className="btn-link my ml-2"
 									onClick={() => logout(props.token, props.URL)}
 								>
 									Log Out
-								</Button>
+									</Button>
 							</NavItem>
 						</FormGroup>
 					</Form>
-
 				</UncontrolledCollapse>
 			</Navbar>
 		</>
@@ -115,7 +118,7 @@ class Main extends React.Component {
 		})
 		const data = await resp.json()
 		console.log('FEETTTTTCCHHHH', data)
-		this.setState({ data, loading: false })
+		this.setState({ data: data.data, loading: false })
 	}
 
 	render() {
@@ -130,7 +133,7 @@ class Main extends React.Component {
 				<>
 					<NavBar {...this.props} {...this.state.data} fetch={this.fetchData} />
 					<Row className="dashboard">
-						<Col md={2} sm={3} className='sidebar' style={{ height: 'calc(100vh - 60px)' }}>
+						<Col md={2} sm={4} className='sidebar'>
 							<NavLink className=''>
 								<Link to="/main/projects/inbox/">Inbox</Link>
 							</NavLink>
@@ -150,19 +153,25 @@ class Main extends React.Component {
 								<NewProject {...this.props} fetch={this.fetchData} />
 							</NavLink>
 							<hr />
-							<h5 className='text-white text-center'>Labels</h5>
-							{labels.map(l => {
-								return <NavLink>
-									<Link to='#' style={{ color: l.color }} >
-										{l.name} <i class="fa fa-bookmark" aria-hidden="true"></i>
-									</Link>
-								</NavLink>
-							})}
-							<NavLink>
-								<NewLabel {...this.props} fetch={this.fetchData} />
+							<NavLink href='#' id="toggler">
+								<h5 className='text-white text-center'>
+									Labels <i class="nc-icon nc-minimal-down mx-2"></i>
+								</h5>
 							</NavLink>
+							<UncontrolledCollapse toggler="#toggler">
+								{labels.map(l => {
+									return <NavLink>
+										<Link to='#' style={{ color: l.color }} >
+											{l.name} <i class="fa fa-bookmark" aria-hidden="true"></i>
+										</Link>
+									</NavLink>
+								})}
+								<NavLink>
+									<NewLabel {...this.props} fetch={this.fetchData} />
+								</NavLink>
+							</UncontrolledCollapse>
 						</Col>
-						<Col className='body' md={10} sm={9} xs={12} >
+						<Col className='body' md={10} sm={8} xs={12} >
 							<div className='px-5 py-3'>
 								<Switch>
 									<Route path='/main/projects/:project/' render={(props) =>

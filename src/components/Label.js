@@ -19,6 +19,7 @@ function MultiSelect(props) {
             closeMenuOnSelect={false}
             components={animatedComponents}
             isMulti
+            defaultValue={props.defaultValue && props.defaultValue.map(i => props.options.filter(o => i.id === o.value)[0])}
             onChange={e => { props.setLabels(e ? e.map(item => item.value) : []) }}
             options={props.options}
         />
@@ -26,7 +27,7 @@ function MultiSelect(props) {
 }
 function LaBel(props) {
     const { labelList, labels } = { ...props }
-    console.log('labellll', labelList)
+    // console.log('labellll', labelList)
     return (
         <div>
             <Button type="button" color='neutral' id="tag" data-toggle='popover' >
@@ -54,7 +55,8 @@ function LaBel(props) {
                             </option>
                         })}
                     </Input> */}
-                    <MultiSelect options={labels.map(item => { return { value: item.id, label: item.name } })} setLabels={props.setLabels} />
+                    <MultiSelect options={labels.map(item => { return { value: item.id, label: item.name } })}
+                        defaultValue={labelList} setLabels={props.setLabels} />
                 </PopoverBody>
             </UncontrolledPopover>
         </div>

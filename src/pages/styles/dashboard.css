@@ -5,10 +5,14 @@ a:visited {
 .sidebar {
     background-color: rgba(121, 120, 120, 0.856);
     padding: 2rem 0 !important;
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .sidebar .nav-link {
-    padding: 0.5rem 1rem;
+    /* padding: 0.5rem 1rem; */
+    color: white;
 }
 
 .dashboard {
@@ -20,6 +24,7 @@ a:visited {
 
 .body {
     background-color: rgb(255, 255, 255);
+    line-height: 1;
 }
 
 .btn.btn-link {
@@ -40,7 +45,7 @@ a:visited {
 
 .sidebar a:hover,
 .sidebar a:focus {
-    color: tomato;
+    color: #ffc0a4 !important;
 }
 
 #new-project {
@@ -49,11 +54,11 @@ a:visited {
 .todo-item {
     border-bottom: 0.5px solid rgba(117, 117, 117, 0.637);
     margin: 0 2rem;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
 }
 .todo-item.checked * {
-    opacity: .7;
+    opacity: .6;
 }
 
 .todo-item button:hover {
@@ -61,7 +66,7 @@ a:visited {
 }
 
 .todo-item button {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 button.priority:hover, 

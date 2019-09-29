@@ -18,7 +18,7 @@ function NewTodo(props) {
 	const [modalToggle, setModalToggle] = useState(false);
 	const [content, setContent] = useState()
 	const [dueTime, setDueTime] = useState(null)
-	const [project, setProjectId] = useState(default_project.id)
+	const [projectId, setProjectId] = useState(default_project.id)
 	const [labelList, setLabels] = useState([])
 	const [priority, setPriorityId] = useState()
 
@@ -28,7 +28,7 @@ function NewTodo(props) {
 			let todo = {
 				content,
 				due_time: dueTime.toISOString(),
-				project_id: project,
+				project_id: projectId,
 				labelList,
 				priority
 			}
@@ -88,15 +88,13 @@ function NewTodo(props) {
 								<label>Content</label>
 								<Input type="text" placeholder="Your task..."
 									maxLength={256} required={true}
-									onChange={e => { setContent(e.target.value); console.log('content', e.target.value) }} />
+									onChange={e => setContent(e.target.value)} />
 							</FormGroup>
 							<FormGroup className="col-md-3">
 								<label>Due Date</label>
 								<Datetime
-									inputProps={{
-										placeholder: "Deadline", style: { width: '10rem' }, valid: dueTime > moment()
-									}}
-									onChange={(e) => { if (e._d) setDueTime(e._d); console.log('helllo date', e._d > moment()) }}
+									inputProps={{ placeholder: "Deadline", style: { width: '10rem' } }}
+									onChange={(e) => { if (e._d) setDueTime(e._d) }}
 								/>
 							</FormGroup>
 						</div>
