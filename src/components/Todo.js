@@ -7,9 +7,9 @@ import Datetime from 'react-datetime';
 import moment from "moment";
 
 
-import Priority from './Priority'
-import Label from './Label'
-import Project from './Project'
+import Priority from './PrioritySelect'
+import Label from './LabelSelect'
+import Project from './ProjectSelect'
 
 
 function EditTodo(props) {
@@ -117,7 +117,7 @@ function EditTodo(props) {
 
 function TodoItem(props) {
 	let todo = props.todo;
-	console.log('TODOITEM', moment(todo.due_date) > moment())
+	// console.log('TODOITEM', moment(todo.due_date) > moment())
 	const toggleTodo = async (id) => {
 		if (!todo.completed) {
 			const resp = await fetch(`${props.URL}todos/complete/${id}`, {
@@ -169,7 +169,7 @@ function TodoItem(props) {
 	}
 
 	return (
-		<div className={`todo-item d-flex ${todo.completed ? 'checked' : null}`}>
+		<div className={`todo-item d-flex ${todo.completed ? 'checked' : null}`} style={{ flexWrap: 'wrap' }}>
 			<FormGroup check>
 				<Button className='mx-2 p-0' color='neutral'
 					onClick={() => toggleTodo(todo.id)}>
@@ -180,11 +180,15 @@ function TodoItem(props) {
 				<span> {todo.content}{' '}</span>
 				{todo.priority ?
 					<small >
-						<i style={{ color: todo.priority.color, margin: '1rem' }} className="fa fa-flag" aria-hidden="true"></i>
+						<i style={{ color: todo.priority.color }} className="fa fa-flag mx-1" aria-hidden="true"></i>
 					</small> : null}
-				<span style={{ fontSize: 10, color: moment(todo.due_date) < moment() && !todo.completed ? '#f5593d' : 'grey' }}>
-					<i className="nc-icon nc-calendar-60 mr-1" />{moment(todo.due_date).format('lll')}</span><br />
-				<small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem' }}>
+				<span style={{
+					backgroundColor: moment(todo.due_date) < moment() && !todo.completed ? '#ffc0a4' : 'transparent',
+					fontSize: 10,
+					color: moment(todo.due_date) < moment() && !todo.completed ? '#f5593d' : 'grey'
+				}}>
+					<i className="nc-icon nc-calendar-60 mx-1" />{moment(todo.due_date).format('lll')}</span><br />
+				<small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
 					<i className="nc-icon nc-box mr-1" /> {todo.project.name}
 				</small>
 

@@ -21,6 +21,10 @@ import NavBar from '../components/Navbar'
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col, Alert } from "reactstrap";
 
+const fbOauth = URL => {
+  window.location.replace(`${URL}login/facebook`)
+}
+
 function FormErrors(props) {
   const [visible, setVisible] = useState(true)
   const onDismiss = () => {
@@ -96,17 +100,12 @@ function RegisterPage(props) {
                     className="btn-neutral btn-just-icon mr-2"
                     color="facebook"
                     href="#pablo"
-                    onClick={e => e.preventDefault()}
+                    onClick={e => {
+                      e.preventDefault()
+                      fbOauth(props.URL)
+                    }}
                   >
                     <i className="fa fa-facebook-square" />
-                  </Button>
-                  <Button
-                    className="btn-neutral btn-just-icon mr-2"
-                    color="google"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    <i className="fa fa-google-plus" />
                   </Button>
                 </div>
                 <Form className="register-form"

@@ -21,6 +21,8 @@ import {
 	Card, CardBody
 } from "reactstrap";
 import './styles/dashboard.css'
+import EditLabel from 'components/EditLabel';
+import EditProject from 'components/EditProject';
 
 function NavBar(props) {
 	const [bodyClick, setBodyClick] = useState(false);
@@ -61,7 +63,6 @@ function NavBar(props) {
 				</div>
 				<UncontrolledCollapse navbar toggler="#navbarTogglerDemo02">
 					<Nav className="ml-auto mt-2 mt-lg-0" navbar>
-						<NavItem style={{ color: 'white' }}>{props.user.name}</NavItem>
 					</Nav>
 					<Form className="form-inline ml-auto" style={{ listStyleType: "none" }} >
 						<FormGroup className="has-white">
@@ -72,6 +73,7 @@ function NavBar(props) {
 								<Input placeholder="Search tasks..." type="text" onChange={e => setKey(e.target.value)} />
 							</Form>
 							<NavItem>
+								<NavItem style={{ color: 'white', marginLeft: '1rem' }}>{props.user.name}</NavItem>
 							</NavItem>
 							<NewTodo {...props} className='btn-link my' />
 
@@ -123,7 +125,7 @@ class Main extends React.Component {
 
 	render() {
 		const { default_project, projects, labels } = { ...this.state.data }
-		// console.log('MAIN', default_project, projects, this.state)
+		console.log('MAIN', this.state)
 		if (this.state.loading) {
 			return <div style={{ padding: '45vh 50vw' }}>
 				<Spinner style={{ width: '3rem', height: '3rem' }} color='danger' />
@@ -133,12 +135,14 @@ class Main extends React.Component {
 				<>
 					<NavBar {...this.props} {...this.state.data} fetch={this.fetchData} />
 					<Row className="dashboard">
-						<Col md={2} sm={4} className='sidebar'>
+						<Col lg={2} md={3} sm={4} className='sidebar'>
 							<NavLink className=''>
 								<Link to="/main/projects/inbox/">Inbox</Link>
 							</NavLink>
 							<NavLink>
-								<Link to="/main/today/">Today</Link>
+								<Link to="/main/today/">
+									Today <small>{this.state.data.today.length}</small>
+								</Link>
 							</NavLink>
 							<hr />
 							<h5 className='text-white text-center'>Projects</h5>
@@ -146,7 +150,10 @@ class Main extends React.Component {
 							{projects.filter(p => p.id !== default_project.id).map(p => {
 								return <>
 									<NavLink>
-										<Link to={`/main/projects/${p.name}/`}>{p.name}</Link>
+										<Link to={`/main/projects/${p.name}/`}>
+											{p.name} <small>{p.todos.length}</small>
+											<EditProject {...this.props} fetch={this.fetchData} project={p} />
+										</Link>
 									</NavLink> </>
 							})}
 							<NavLink>
@@ -162,7 +169,8 @@ class Main extends React.Component {
 								{labels.map(l => {
 									return <NavLink>
 										<Link to='#' style={{ color: l.color }} >
-											{l.name} <i class="fa fa-bookmark" aria-hidden="true"></i>
+											{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
+											<EditLabel {...this.props} fetch={this.fetchData} label={l} />
 										</Link>
 									</NavLink>
 								})}
@@ -171,7 +179,7 @@ class Main extends React.Component {
 								</NavLink>
 							</UncontrolledCollapse>
 						</Col>
-						<Col className='body' md={10} sm={8} xs={12} >
+						<Col className='body' lg={10} md={9} sm={8} xs={12} >
 							<div className='px-5 py-3'>
 								<Switch>
 									<Route path='/main/projects/:project/' render={(props) =>

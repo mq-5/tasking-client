@@ -20,8 +20,9 @@ function NewProject(props) {
         const data = await resp.json()
         console.log('FDSKLFJSDLFJLF0', data)
         if (data.status.ok) {
+            window.location.href = '/main'
             setToggleModal(false)
-            props.fetch()
+            // props.fetch()
         } else {
             alert('Error!')
         }

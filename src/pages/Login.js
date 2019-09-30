@@ -56,7 +56,6 @@ function Login(props) {
     console.log(data.status.message)
   }
 
-
   if (props.token) {
     alert('You already logged in!')
     window.location.replace(window.location.origin)
@@ -86,14 +85,14 @@ function Login(props) {
                     >
                       <i className="fa fa-facebook-square" />
                     </Button>
-                    <Button
+                    {/* <Button
                       className="btn-neutral btn-just-icon mr-2"
                       color="google"
                       href="#pablo"
                       onClick={e => e.preventDefault()}
                     >
                       <i className="fa fa-google-plus" />
-                    </Button>
+                    </Button> */}
                   </div>
                   <Form className="register-form" onSubmit={e => {
                     e.preventDefault()
@@ -111,8 +110,7 @@ function Login(props) {
                     <Button
                       className="btn-link"
                       color="danger"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      href="/forget"
                     >
                       Forgot password?
                     </Button>

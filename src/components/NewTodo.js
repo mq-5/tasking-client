@@ -7,9 +7,9 @@ import Datetime from 'react-datetime';
 import moment from "moment";
 
 
-import Priority from './Priority'
-import Label from './Label'
-import Project from './Project'
+import Priority from './PrioritySelect'
+import Label from './LabelSelect'
+import Project from './ProjectSelect'
 
 
 function NewTodo(props) {
