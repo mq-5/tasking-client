@@ -235,7 +235,7 @@ function TodoItem(props) {
 								})}
 								defaultValue={todo.assignees}
 								setValue={setAssignees} />
-							<Button size="sm" color='danger' onClick={e => assign(e, todo.id)} className='mt-2'>Add</Button>
+							<Button size="sm" color='danger' onClick={e => assign(e, todo.id)} className='mt-2'>Ok</Button>
 						</PopoverBody>
 					</UncontrolledPopover> </>}
 				{todo.assignees.map(p => <Badge pill color='primary' title={p.name} style={{ padding: '0.3rem 0.5rem' }}>{p.name[0]}</Badge>)}

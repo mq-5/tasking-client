@@ -137,7 +137,7 @@ class Main extends React.Component {
 				<>
 					<NavBar {...this.props} {...this.state.data} fetch={this.fetchData} />
 					<Row className="dashboard">
-						<Col lg={2} md={3} sm={4} className='sidebar'>
+						<Col md={3} sm={4} className='sidebar'>
 							<OverflowScrolling className='overflow-scrolling'>
 								<NavLink className=''>
 									<Link to={`/main/projects/${default_project.id}/`}>
@@ -210,7 +210,7 @@ class Main extends React.Component {
 								</UncontrolledCollapse>
 							</OverflowScrolling>
 						</Col>
-						<Col className='body' lg={10} md={9} sm={8} xs={12} >
+						<Col className='body' md={9} sm={8} xs={12} >
 							<div className='px-5 py-3'>
 								<Switch>
 									<Route path='/main/' exact render={() => <h1 className='m-5'>Hello {this.state.data.user.name}... </h1>} />
