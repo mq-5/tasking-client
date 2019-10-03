@@ -95,6 +95,7 @@ function NewTodo(props) {
 								<Datetime
 									inputProps={{ placeholder: "Deadline", style: { width: '10rem' } }}
 									onChange={(e) => { if (e._d) setDueTime(e._d) }}
+									closeOnSelect={true}
 								/>
 							</FormGroup>
 						</div>

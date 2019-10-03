@@ -34,7 +34,7 @@ function ShareProject(props) {
             </UncontrolledAlert>
             <Button color="neutral" id='new-label' className='ml-auto'
                 type="button" onClick={() => setToggleModal(true)}>
-                Share <i class="fa fa-user-plus" aria-hidden="true"></i>
+                Invite <i class="fa fa-user-plus" aria-hidden="true"></i>
             </Button>
             <Modal isOpen={toggleModal} toggle={() => setToggleModal(false)}>
                 <div className="modal-header">
