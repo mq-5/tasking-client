@@ -1,30 +1,11 @@
 import React, { useState } from "react";
-
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-
 import {
     Button,
     UncontrolledTooltip,
     UncontrolledPopover,
     PopoverBody, PopoverHeader
 } from "reactstrap";
-
-const animatedComponents = makeAnimated();
-
-function MultiSelect(props) {
-    return (
-        <Select
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            isMulti
-            defaultValue={props.defaultValue && props.defaultValue.map(i => props.options.filter(o => i.id === o.value)[0])}
-            onChange={e => { props.setLabels(e ? e.map(item => item.value) : []) }}
-            options={props.options}
-        />
-    );
-}
-
+import MultiSelect from './MultiSelect'
 
 function LaBel(props) {
     const { labelList, labels } = { ...props }
@@ -47,7 +28,7 @@ function LaBel(props) {
                 <PopoverHeader>Labels</PopoverHeader>
                 <PopoverBody style={{ minWidth: '10rem', textAlign: 'left' }}>
                     <MultiSelect options={labels.map(item => { return { value: item.id, label: item.name } })}
-                        defaultValue={labelList} setLabels={props.setLabels} />
+                        defaultValue={labelList} setValue={props.setLabels} />
                 </PopoverBody>
             </UncontrolledPopover>
         </div>

@@ -9,7 +9,7 @@ function EditProject(props) {
     const createProject = async (e) => {
         e.preventDefault()
         const project = { name }
-        const resp = await fetch(`${props.URL}projects/${current.id}`, {
+        const resp = await fetch(`${props.URL}projects/edit/${current.id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -30,7 +30,7 @@ function EditProject(props) {
 
     const deleteProject = async (e) => {
         e.preventDefault()
-        const resp = await fetch(`${props.URL}projects/${current.id}`, {
+        const resp = await fetch(`${props.URL}projects/edit/${current.id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Token ${props.token}`

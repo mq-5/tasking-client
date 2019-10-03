@@ -36,7 +36,7 @@ function NewLabel(props) {
     }
     return (
         <>
-            <Button color="neutral" id='new-label' className='mx-2'
+            <Button color="neutral" block id='new-label' className='mx-2'
                 type="button" onClick={() => setToggleModal(true)}>
                 New Label <i class="fa fa-plus" aria-hidden="true"></i>
             </Button>

@@ -5,8 +5,11 @@ import NewTodo from '../components/NewTodo';
 import NewProject from '../components/NewProject';
 import NewLabel from 'components/NewLabel';
 import Todos from './Todos';
+import EditLabel from 'components/EditLabel';
+import EditProject from 'components/EditProject';
+import Profile from '../pages/Profile'
 
-
+import OverflowScrolling from 'react-overflow-scrolling';
 import {
 	UncontrolledCollapse,
 	Button,
@@ -17,12 +20,10 @@ import {
 	Navbar,
 	NavItem,
 	NavLink,
-	Nav, Row, Col, Spinner,
-	Card, CardBody
+	Nav, Row, Col, Spinner
 } from "reactstrap";
 import './styles/dashboard.css'
-import EditLabel from 'components/EditLabel';
-import EditProject from 'components/EditProject';
+import Routes from 'routes';
 
 function NavBar(props) {
 	const [bodyClick, setBodyClick] = useState(false);
@@ -45,7 +46,7 @@ function NavBar(props) {
 			<Navbar color="danger" expand="lg" className="sticky-top">
 				<div className="navbar-translate">
 					<NavbarBrand href="/">
-						Todo List
+						Tasking
 				</NavbarBrand>
 					<button
 						className="navbar-toggler"
@@ -73,7 +74,8 @@ function NavBar(props) {
 								<Input placeholder="Search tasks..." type="text" onChange={e => setKey(e.target.value)} />
 							</Form>
 							<NavItem>
-								<NavItem style={{ color: 'white', marginLeft: '1rem' }}>{props.user.name}</NavItem>
+								{/* <NavItem style={{ color: 'white', marginLeft: '1rem' }}>{props.user.name}</NavItem> */}
+								<Link style={{ color: 'white', marginLeft: '1rem' }} to='/main/profile'>{props.user.name}</Link>
 							</NavItem>
 							<NewTodo {...props} className='btn-link my' />
 
@@ -119,12 +121,12 @@ class Main extends React.Component {
 			}
 		})
 		const data = await resp.json()
-		console.log('FEETTTTTCCHHHH', data)
+		// console.log('FEETTTTTCCHHHH', data)
 		this.setState({ data: data.data, loading: false })
 	}
 
 	render() {
-		const { default_project, projects, labels } = { ...this.state.data }
+		const { default_project, projects, labels, shared_projects } = { ...this.state.data }
 		console.log('MAIN', this.state)
 		if (this.state.loading) {
 			return <div style={{ padding: '45vh 50vw' }}>
@@ -136,53 +138,83 @@ class Main extends React.Component {
 					<NavBar {...this.props} {...this.state.data} fetch={this.fetchData} />
 					<Row className="dashboard">
 						<Col lg={2} md={3} sm={4} className='sidebar'>
-							<NavLink className=''>
-								<Link to="/main/projects/inbox/">Inbox</Link>
-							</NavLink>
-							<NavLink>
-								<Link to="/main/today/">
-									Today <small>{this.state.data.today.length}</small>
-								</Link>
-							</NavLink>
-							<hr />
-							<h5 className='text-white text-center'>Projects</h5>
-
-							{projects.filter(p => p.id !== default_project.id).map(p => {
-								return <>
-									<NavLink>
-										<Link to={`/main/projects/${p.name}/`}>
+							<OverflowScrolling className='overflow-scrolling'>
+								<NavLink className=''>
+									<Link to={`/main/projects/${default_project.id}/`}>
+										{default_project.name}
+									</Link>
+								</NavLink>
+								<NavLink>
+									<Link to="/main/today/">
+										Today <small>{this.state.data.today.length}</small>
+									</Link>
+								</NavLink>
+								<hr />
+								<h5 className=' text-center'>Projects</h5>
+								{projects.filter(p => p.id !== default_project.id).map(p => {
+									return <NavLink>
+										<Link to={`/main/projects/${p.id}/`}>
 											{p.name} <small>{p.todos.length}</small>
 											<EditProject {...this.props} fetch={this.fetchData} project={p} />
-										</Link>
-									</NavLink> </>
-							})}
-							<NavLink>
-								<NewProject {...this.props} fetch={this.fetchData} />
-							</NavLink>
-							<hr />
-							<NavLink href='#' id="toggler">
-								<h5 className='text-white text-center'>
-									Labels <i class="nc-icon nc-minimal-down mx-2"></i>
-								</h5>
-							</NavLink>
-							<UncontrolledCollapse toggler="#toggler">
-								{labels.map(l => {
-									return <NavLink>
-										<Link to='#' style={{ color: l.color }} >
-											{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
-											<EditLabel {...this.props} fetch={this.fetchData} label={l} />
 										</Link>
 									</NavLink>
 								})}
 								<NavLink>
-									<NewLabel {...this.props} fetch={this.fetchData} />
+									<NewProject {...this.props} fetch={this.fetchData} />
 								</NavLink>
-							</UncontrolledCollapse>
+								<hr />
+								<h5 className=' text-center'>Shared Projects</h5>
+								{shared_projects.map(p => {
+									return <>
+										<NavLink>
+											<Link to={`/main/projects/${p.id}/`}>
+												{p.name} <small>{p.todos.length}</small>
+											</Link>
+										</NavLink> </>
+								})}
+								<hr />
+								{/* <NavLink href='#' id="toggler"> */}
+								<h5 className=' text-center' id="label">
+									<a>	Labels <i class="nc-icon nc-minimal-down mx-2"></i></a>
+								</h5>
+								{/* </NavLink> */}
+								<UncontrolledCollapse toggler="#label">
+									{labels.map(l => {
+										return <NavLink>
+											<Link to='#' style={{ color: l.color }} >
+												{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
+												<EditLabel {...this.props} fetch={this.fetchData} label={l} />
+											</Link>
+										</NavLink>
+									})}
+									<NavLink>
+										<NewLabel {...this.props} fetch={this.fetchData} />
+									</NavLink>
+								</UncontrolledCollapse>
+								<hr />
+								<h5 className='text-center' id="filter">
+									<a>	Filters <i class="nc-icon nc-minimal-down mx-2"></i></a>
+								</h5>
+								<UncontrolledCollapse toggler="#filter">
+									{labels.map(l => {
+										return <NavLink>
+											<Link to='#' style={{ color: l.color }} >
+												{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
+												<EditLabel {...this.props} fetch={this.fetchData} label={l} />
+											</Link>
+										</NavLink>
+									})}
+									<NavLink>
+										<NewLabel {...this.props} fetch={this.fetchData} />
+									</NavLink>
+								</UncontrolledCollapse>
+							</OverflowScrolling>
 						</Col>
 						<Col className='body' lg={10} md={9} sm={8} xs={12} >
 							<div className='px-5 py-3'>
 								<Switch>
-									<Route path='/main/projects/:project/' render={(props) =>
+									<Route path='/main/' exact render={() => <h1 className='m-5'>Hello {this.state.data.user.name}... </h1>} />
+									<Route path='/main/projects/:id/' render={(props) =>
 										<Todos {...props} {...this.state} fetch={this.fetchData} />} >
 									</Route>
 									<Route path='/main/today/' render={(props) =>
@@ -191,8 +223,8 @@ class Main extends React.Component {
 									<Route path='/main/search/:key/' render={(props) =>
 										<Todos {...props} {...this.state} fetch={this.fetchData} />} >
 									</Route>
+									<Route path="/main/profile" render={(props) => <Profile {...props} {...this.state} />} />
 								</Switch>
-
 							</div>
 						</Col>
 					</Row>

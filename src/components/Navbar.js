@@ -73,7 +73,7 @@ function IndexNavbar(props) {
 						data-placement="bottom"
 						href="/"
 					>
-						Todo List
+						Tasking
           </NavbarBrand>
 					<button
 						aria-expanded={navbarCollapse}

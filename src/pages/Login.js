@@ -26,6 +26,7 @@ const fbOauth = URL => {
 }
 
 function Login(props) {
+  // console.log(props.history)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -49,7 +50,15 @@ function Login(props) {
     })
     const data = await resp.json()
     if (data.status.ok) {
-      window.location.href = `/?api_key=${data.token}`
+      localStorage.setItem("token", data.token)
+      let x = localStorage.getItem('from')
+      if (x !== null) {
+        localStorage.removeItem('from')
+        window.location.replace(`/invitation/${x}`)
+      } else {
+        window.location.replace('/main')
+      }
+
     } else {
       alert(`Failure: ${data.status.message}`)
     }

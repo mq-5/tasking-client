@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
 	Button, FormGroup,
-	Modal, Form, Input, Badge
+	Modal, Form, Input, Badge, UncontrolledPopover, PopoverHeader, PopoverBody
 } from 'reactstrap';
 import Datetime from 'react-datetime';
 import moment from "moment";
 
-
+import MultiSelect from './MultiSelect'
 import Priority from './PrioritySelect'
 import Label from './LabelSelect'
 import Project from './ProjectSelect'
@@ -14,14 +14,14 @@ import Project from './ProjectSelect'
 
 function EditTodo(props) {
 	let todo = props.todo
-	// console.log('SETTODOO1111', todo, moment(todo.due_date))
+	// console.log('SETTODOO1111', todo, priority)
 	const [modalToggle, setModalToggle] = useState(false);
 	const [content, setContent] = useState(todo.content)
 	const [dueTime, setDueTime] = useState(moment(todo.due_date))
 	const [projectId, setProjectId] = useState(todo.project.id)
 	const [labelList, setLabels] = useState(todo.labels)
 	const [priority, setPriorityId] = useState(todo.priority && todo.priority.id)
-
+	// console.log(todo.content, dueTime, 'now', moment(), dueTime < moment())
 	const postTodo = async () => {
 		// console.log('SETTODOOOOO', priority)
 		if (dueTime > moment()) {
@@ -117,7 +117,9 @@ function EditTodo(props) {
 
 function TodoItem(props) {
 	let todo = props.todo;
-	// console.log('TODOITEM', moment(todo.due_date) > moment())
+	let project = props.project;
+	const [assignees, setAssignees] = useState()
+	// console.log('TODOITEM', project.collaborators.concat(project.owner))
 	const toggleTodo = async (id) => {
 		if (!todo.completed) {
 			const resp = await fetch(`${props.URL}todos/complete/${id}`, {
@@ -165,6 +167,29 @@ function TodoItem(props) {
 		if (data.status.ok) {
 			props.fetch()
 			console.log('deleted', data)
+		} else {
+			alert(`Message: ${data.status.message} `)
+		}
+	}
+
+	const assign = async (e, id) => {
+		e.preventDefault();
+		console.log('RUNNING', id)
+		const resp = await fetch(`${props.URL}todos/assign/${id}`, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': `Token ${props.token}`
+			},
+			body: JSON.stringify({ assignees })
+		})
+		const data = await resp.json()
+		if (data.status.ok) {
+			props.fetch()
+			console.log('assigned', data)
+		} else {
+			alert(`Message: ${data.status.message} `)
 		}
 	}
 
@@ -187,11 +212,33 @@ function TodoItem(props) {
 					fontSize: 10,
 					color: moment(todo.due_date) < moment() && !todo.completed ? '#f5593d' : 'grey'
 				}}>
-					<i className="nc-icon nc-calendar-60 mx-1" />{moment(todo.due_date).format('lll')}</span><br />
+					<i className="nc-icon nc-calendar-60 mx-1" />{moment(todo.due_date).format('lll')}</span>
+				<br />
 				<small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
 					<i className="nc-icon nc-box mr-1" /> {todo.project.name}
 				</small>
-
+				{project && <><Button className='p-0 btn-link' id={`pop-${todo.id}`} data-toggle='popover'
+				>
+					<small><i class="fa fa-user-o" aria-hidden="true"></i></small>
+				</Button>
+					<UncontrolledPopover
+						trigger="legacy"
+						placement="bottom"
+						target={`pop-${todo.id}`}
+						className="popover-primary"
+					>
+						<PopoverHeader>Members</PopoverHeader>
+						<PopoverBody style={{ minWidth: '10rem', textAlign: 'left' }}>
+							<MultiSelect
+								options={project.collaborators.concat(project.owner).map(item => {
+									return { value: item.id, label: item.name }
+								})}
+								defaultValue={todo.assignees}
+								setValue={setAssignees} />
+							<Button size="sm" color='danger' onClick={e => assign(e, todo.id)} className='mt-2'>Add</Button>
+						</PopoverBody>
+					</UncontrolledPopover> </>}
+				{todo.assignees.map(p => <Badge pill color='primary' title={p.name} style={{ padding: '0.3rem 0.5rem' }}>{p.name[0]}</Badge>)}
 			</FormGroup>
 			<div className='ml-auto align-items-center d-flex'>
 				{todo.labels.map(label =>
