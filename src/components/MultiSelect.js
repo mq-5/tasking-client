@@ -11,8 +11,11 @@ export default function MultiSelect(props) {
             closeMenuOnSelect={false}
             components={animatedComponents}
             isMulti
-            defaultValue={props.defaultValue && props.defaultValue.map(i => props.options.filter(o => i.id === o.value)[0])}
-            onChange={e => { props.setValue(e ? e.map(item => item.value) : []) }}
+            defaultValue={props.defaultValue}
+            onChange={e => {
+                console.log('tirrreed', e && e.map(item => item.value), props.defaultValue);
+                props.setValue(e ? e.map(item => item.value) : [])
+            }}
             options={props.options}
         />
     );

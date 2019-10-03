@@ -2,6 +2,7 @@ import React from 'react';
 import { UncontrolledTooltip, Badge } from 'reactstrap'
 import Share from 'components/ShareProject';
 import TodoItem from 'components/Todo';
+import MultiSelect from 'components/MultiSelect';
 
 function Todos(props) {
 	const id = props.match.params.id;
@@ -18,6 +19,7 @@ function Todos(props) {
 					<h3 className='mb-3'><strong>{project.name.toUpperCase()}</strong></h3>
 					{collabs > 0 ? <>
 						<small className='ml-3'>Shared with <Badge id="sharing" className='mx-1' pill>{collabs}</Badge></small>
+						<small><a>Change</a></small>
 						<UncontrolledTooltip placement="bottom" target="sharing">
 							{project.collaborators.map(item => item.name)}
 						</UncontrolledTooltip> </>

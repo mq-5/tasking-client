@@ -9,7 +9,7 @@ import MultiSelect from './MultiSelect'
 
 function LaBel(props) {
     const { labelList, labels } = { ...props }
-    // console.log('labellll', labelList)
+    console.log('labellll', labelList)
     return (
         <div>
             <Button type="button" color='neutral' id="tag" data-toggle='popover' >
@@ -27,8 +27,10 @@ function LaBel(props) {
             >
                 <PopoverHeader>Labels</PopoverHeader>
                 <PopoverBody style={{ minWidth: '10rem', textAlign: 'left' }}>
-                    <MultiSelect options={labels.map(item => { return { value: item.id, label: item.name } })}
-                        defaultValue={labelList} setValue={props.setLabels} />
+                    <MultiSelect
+                        options={labels.map(item => { return { value: item.id, label: item.name } })}
+                        defaultValue={labelList.map(item => { return { value: item.id, label: item.name } })}
+                        setValue={props.setLabels} />
                 </PopoverBody>
             </UncontrolledPopover>
         </div>
