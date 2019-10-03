@@ -174,8 +174,8 @@ class Main extends React.Component {
 								})}
 								<hr />
 								{/* <NavLink href='#' id="toggler"> */}
-								<h5 className=' text-center' id="label">
-									<a>	Labels <i class="nc-icon nc-minimal-down mx-2"></i></a>
+								<h5 className=' text-center' >
+									<a id="label">	Labels <i class="nc-icon nc-minimal-down mx-2"></i></a>
 								</h5>
 								{/* </NavLink> */}
 								<UncontrolledCollapse toggler="#label">
@@ -192,8 +192,8 @@ class Main extends React.Component {
 									</NavLink>
 								</UncontrolledCollapse>
 								<hr />
-								<h5 className='text-center' id="filter">
-									<a>	Filters <i class="nc-icon nc-minimal-down mx-2"></i></a>
+								<h5 className='text-center' >
+									<a id="filter">	Filters <i class="nc-icon nc-minimal-down mx-2"></i></a>
 								</h5>
 								<UncontrolledCollapse toggler="#filter">
 									{labels.map(l => {

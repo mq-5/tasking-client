@@ -1,8 +1,9 @@
 a:visited {
     color: white;
 }
+
 h1 {
-    font-family: 'Poiret One', cursive !important;
+    font-family: 'Quicksand', sans-serif !important;
   }
 .sidebar {
     /* background-color: rgba(214, 213, 213, 0.856); */
@@ -50,12 +51,13 @@ h1 {
     font-size: 12px;
     text-transform: uppercase;
     font-weight: bold;
-    padding: 15%;
+    padding: 0 15%;
 }
 
 .sidebar a:hover,
 .sidebar a:focus {
-    color: rgb(252, 127, 105) !important;
+    /* color: rgb(252, 127, 105) !important; */
+    color: #333333 !important;
 }
 
 #new-project {

@@ -52,12 +52,12 @@ function Login(props) {
     if (data.status.ok) {
       localStorage.setItem("token", data.token)
       let x = localStorage.getItem('from')
-      if (x !== null) {
-        localStorage.removeItem('from')
+      if (x !== 'undefined') {
         window.location.replace(`/invitation/${x}`)
       } else {
         window.location.replace('/main')
       }
+      localStorage.removeItem('from')
 
     } else {
       alert(`Failure: ${data.status.message}`)

@@ -26,7 +26,7 @@ function LandingPageHeader() {
         <>
             <div
                 style={{
-                    backgroundImage: "url(" + require('../assets/img/fabio-mangione.jpg') + ")"
+                    backgroundImage: "url(" + require('../pages/styles/cell-phone-close-up-contemporary-905873.jpg') + ")"
                 }}
                 className="page-header"
                 data-parallax={true}
@@ -35,17 +35,17 @@ function LandingPageHeader() {
                 <div className="filter" />
                 <Container>
                     <div className="motto text-center">
-                        <h1>Example page</h1>
-                        <h3>Start designing your landing page here.</h3>
+                        <h1>Get things done</h1>
                         <br />
                         <Button
                             href="/main"
                             className="btn-round mr-1"
                             color="neutral"
                             outline
+                            size='lg'
                         >
                             <i className="nc-icon nc-bullet-list-67" />{" "}
-                            Your Todos
+                            Your Tasks
                         </Button>
                     </div>
                 </Container>

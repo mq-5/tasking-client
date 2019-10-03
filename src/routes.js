@@ -13,11 +13,9 @@ import InvResponse from './pages/InvResponse';
 const URL = process.env.REACT_APP_BACKEND_URL
 
 const ProtectedRoute = ({ location, path, component: Component, authenticator, ...rest }) => {
-    // if (props.path === '/invitation/:token') {
-    // console.log(location)
     let x = location.pathname.split('/')[2]
     localStorage.setItem('from', x)
-    // } else {
+
     return (
         <Route {...rest} render={(props) => (
             authenticator

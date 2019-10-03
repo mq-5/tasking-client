@@ -93,19 +93,16 @@ function IndexNavbar(props) {
 					isOpen={navbarCollapse}
 				>
 					<Nav navbar>
-						<NavItem>
-							<NavLink
-								href="https://demos.creative-tim.com/paper-kit-react/#/documentation?ref=pkr-index-navbar"
-
-							>
+						{/* <NavItem>
+							<NavLink>
 								<i className="nc-icon nc-book-bookmark" /> Documentation
 							</NavLink>
-						</NavItem>
+						</NavItem> */}
 						{props.token ? <>
 							<NavItem>
 								<Button
 									className="btn-round"
-									color="secondary"
+									color="danger"
 									onClick={() => logout(props.token, props.URL)}
 								>
 									Log Out

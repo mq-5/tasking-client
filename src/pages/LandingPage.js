@@ -146,96 +146,64 @@ function LandingPage(props) {
 				<Container>
 					<Row>
 						<Col className="ml-auto mr-auto" md="8">
-							<h2 className="title">Let's talk product</h2>
+							<h2 className="title">About Tasking</h2>
 							<h5 className="description">
-								This is the paragraph where you can write more details about
-								your product. Keep you user engaged by providing meaningful
-								information. Remember that by this time, the user is curious,
-								otherwise he wouldn't scroll to get here. Add a button if you
-								want the user to see more.
-                </h5>
-							<br />
-							<Button
-								className="btn-round"
-								color="info"
-								href="#pablo"
-								onClick={e => e.preventDefault()}
-							>
-								See Details
-                </Button>
+								Be organized and in peace
+							</h5>
 						</Col>
 					</Row>
 					<br />
 					<br />
 					<Row>
-						<Col md="3">
+						<Col md="4">
 							<div className="info">
 								<div className="icon icon-info">
-									<i className="nc-icon nc-album-2" />
+									<i className="nc-icon nc-tile-56" />
 								</div>
 								<div className="description">
-									<h4 className="info-title">Beautiful Gallery</h4>
+									<h4 className="info-title">Organized</h4>
 									<p className="description">
-										Spend your time generating new ideas. You don't have to
-										think of implementing.
-                    </p>
-									<Button className="btn-link" color="info" href="#pablo">
+										Organize tasks with projects and priorities
+									</p>
+									<Button className="btn-link" color="info" href="/main">
 										See more
-                    </Button>
+									</Button>
 								</div>
 							</div>
 						</Col>
-						<Col md="3">
+						<Col md="4">
 							<div className="info">
 								<div className="icon icon-info">
-									<i className="nc-icon nc-bulb-63" />
+									<i aria-hidden="true" className="nc-icon nc-tag-content" />
 								</div>
 								<div className="description">
-									<h4 className="info-title">New Ideas</h4>
+									<h4 className="info-title">Stay focused</h4>
 									<p>
-										Larger, yet dramatically thinner. More powerful, but
-										remarkably power efficient.
+										Add labels to tasks
                     </p>
-									<Button className="btn-link" color="info" href="#pablo">
+									<Button className="btn-link" color="info" href="/main">
 										See more
                     </Button>
 								</div>
 							</div>
 						</Col>
-						<Col md="3">
+						<Col md="4">
 							<div className="info">
 								<div className="icon icon-info">
-									<i className="nc-icon nc-chart-bar-32" />
+									<i className="fa fa-users" />
 								</div>
 								<div className="description">
-									<h4 className="info-title">Statistics</h4>
+									<h4 className="info-title">Collaborate</h4>
 									<p>
-										Choose from a veriety of many colors resembling sugar
-										paper pastels.
+										Share with your team and assign tasks
                     </p>
-									<Button className="btn-link" color="info" href="#pablo">
+									<Button className="btn-link" color="info" href="/main">
 										See more
                     </Button>
 								</div>
 							</div>
 						</Col>
-						<Col md="3">
-							<div className="info">
-								<div className="icon icon-info">
-									<i className="nc-icon nc-sun-fog-29" />
-								</div>
-								<div className="description">
-									<h4 className="info-title">Delightful design</h4>
-									<p>
-										Find unique and handmade delightful designs related items
-										directly from our sellers.
-                    </p>
-									<Button className="btn-link" color="info" href="#pablo">
-										See more
-                    </Button>
-								</div>
-							</div>
-						</Col>
+
 					</Row>
 				</Container>
 			</div>
