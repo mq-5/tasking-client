@@ -45,6 +45,11 @@ function NewTodo(props) {
 			console.log(data, moment(data.time).toLocaleString(), moment(data.time))
 			if (data.status.ok) {
 				setModalToggle(false)
+				setDueTime(null)
+				setPriorityId(null)
+				setLabels([])
+				setContent(null)
+				setProjectId(default_project.id)
 				props.fetch()
 			}
 		} else {

@@ -10,6 +10,7 @@ import ColorSelect from './ColorDotSelect'
 
 function Priority(props) {
     const priorities = [...props.priorities].sort((p1, p2) => p1.order - p2.order)
+    // console.log(priorities.slice(-1)[0])
     return (
         <div>
             <Button type="button" color='neutral' id="priority">
@@ -35,8 +36,8 @@ function Priority(props) {
                             Priority {p.order}
                         </UncontrolledTooltip></>)} */}
                     <ColorSelect options={priorities.map(p => { return { color: p.color, label: `Priority ${p.order}`, value: p.id } })}
-                        defaultValue={props.defaultValue}
-                        onChange={e => props.setPriorityId(e.value)} />
+                        defaultValue={props.defaultValue || priorities.slice(-1)[0].id}
+                        onChange={e => { props.setPriorityId(e.value); console.log(e.value) }} />
                 </PopoverBody>
             </UncontrolledPopover>
         </div>
