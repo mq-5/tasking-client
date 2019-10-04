@@ -52,7 +52,7 @@ function Login(props) {
     if (data.status.ok) {
       localStorage.setItem("token", data.token)
       let x = localStorage.getItem('from')
-      if (x !== 'undefined') {
+      if (x) {
         window.location.replace(`/invitation/${x}`)
       } else {
         window.location.replace('/main')
