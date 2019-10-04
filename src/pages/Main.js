@@ -191,23 +191,22 @@ class Main extends React.Component {
 										<NewLabel {...this.props} fetch={this.fetchData} />
 									</NavLink>
 								</UncontrolledCollapse>
-								<hr />
+								{/* <hr />
 								<h5 className='text-center' >
 									<a id="filter">	Filters <i class="nc-icon nc-minimal-down mx-2"></i></a>
 								</h5>
 								<UncontrolledCollapse toggler="#filter">
-									{labels.map(l => {
-										return <NavLink>
-											<Link to='#' style={{ color: l.color }} >
-												{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
-												<EditLabel {...this.props} fetch={this.fetchData} label={l} />
-											</Link>
-										</NavLink>
-									})}
 									<NavLink>
-										<NewLabel {...this.props} fetch={this.fetchData} />
+										<Link to='/main/completed'>
+											Completed
+										</Link>
 									</NavLink>
-								</UncontrolledCollapse>
+									<NavLink>
+										<Link to='/main/tome'>
+											Assigned to me
+										</Link>
+									</NavLink>
+								</UncontrolledCollapse> */}
 							</OverflowScrolling>
 						</Col>
 						<Col className='body' md={9} sm={8} xs={12} >

@@ -207,7 +207,7 @@ function LandingPage(props) {
 					</Row>
 				</Container>
 			</div>
-			<SectionCarousel />
+			{/* <SectionCarousel />
 			<div className="section section-dark text-center">
 				<Container>
 					<h2 className="title">Let's talk about us</h2>
@@ -418,6 +418,7 @@ function LandingPage(props) {
 					</Row>
 				</Container>
 			</div>
+			 */}
 			<div>
 				<Footer />
 			</div>

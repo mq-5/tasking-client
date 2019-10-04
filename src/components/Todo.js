@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
 	Button, FormGroup,
-	Modal, Form, Input, Badge, UncontrolledPopover, PopoverHeader, PopoverBody
+	Modal, Form, Input, Badge, UncontrolledPopover,
+	PopoverHeader, PopoverBody
 } from 'reactstrap';
 import Datetime from 'react-datetime';
 import moment from "moment";
@@ -14,14 +15,14 @@ import Project from './ProjectSelect'
 
 function EditTodo(props) {
 	let todo = props.todo
-	// console.log('SETTODOO1111', todo, priority)
+	// console.log('SETTODOO1111', todo.content)
 	const [modalToggle, setModalToggle] = useState(false);
 	const [content, setContent] = useState(todo.content)
 	const [dueTime, setDueTime] = useState(moment(todo.due_date))
 	const [projectId, setProjectId] = useState(todo.project.id)
 	const [labelList, setLabels] = useState(todo.labels.map(item => { return { value: item.id, label: item.name } }))
 	const [priority, setPriorityId] = useState(todo.priority && todo.priority.id)
-	// console.log(todo.content, dueTime, 'now', moment(), dueTime < moment())
+	//console.log(todo.content, dueTime, 'now', moment(), dueTime < moment())
 	const postTodo = async () => {
 		// console.log('SETTODOOOOO', priority)
 		if (dueTime > moment()) {
@@ -32,6 +33,7 @@ function EditTodo(props) {
 				labelList: labelList.map(item => item.value),
 				priority
 			}
+			console.log('This is painfull', info)
 			const resp = await fetch(`${props.URL}todos/edit/${todo.id}`, {
 				method: 'POST',
 				headers: {
@@ -42,7 +44,7 @@ function EditTodo(props) {
 				body: JSON.stringify(info)
 			})
 			const data = await resp.json()
-			console.log(data, moment(data.time).toLocaleString(), moment(data.time))
+			// console.log(data, moment(data.time).toLocaleString(), moment(data.time))
 			if (data.status.ok) {
 				setModalToggle(false)
 				props.fetch()
@@ -51,7 +53,6 @@ function EditTodo(props) {
 			alert('Due date invalid')
 		}
 	}
-
 	return (
 		<>
 			<Button
@@ -86,23 +87,26 @@ function EditTodo(props) {
 						<div className="form-row">
 							<FormGroup className="col-md-9">
 								<label>Content</label>
-								<Input type="text" defaultValue={content}
+								<Input type="text" defaultValue={todo.content}
 									maxLength={256} required={true}
 									onChange={e => setContent(e.target.value)} />
 							</FormGroup>
 							<FormGroup className="col-md-3">
 								<label>Due Date</label>
 								<Datetime
-									defaultValue={dueTime}
+									defaultValue={moment(todo.due_date)}
 									inputProps={{ style: { width: '10rem' } }}
 									onChange={(e) => { if (e._d) setDueTime(e._d) }}
 								/>
 							</FormGroup>
 						</div>
 						<div className='form-row'>
-							<Priority {...props} setPriorityId={setPriorityId} priorities={props.data.priorities} defaultValue={priority} />
-							<Label {...props} setLabels={setLabels} labelList={labelList} labels={props.data.labels} />
-							<Project {...props} setProjectId={setProjectId} projects={props.data.projects} defaultValue={projectId} />
+							<Priority {...props} setPriorityId={setPriorityId}
+								priorities={props.data.priorities} defaultValue={todo.priority && todo.priority.id} />
+							<Label {...props} setLabels={setLabels} labels={props.data.labels}
+								labelList={todo.labels.map(item => { return { value: item.id, label: item.name } })} />
+							<Project {...props} setProjectId={setProjectId} projects={props.data.projects}
+								defaultValue={todo.project.id} />
 							<Button color="danger" type='submit' className='ml-auto mr-3'>
 								Submit
 							</Button>
@@ -118,7 +122,7 @@ function EditTodo(props) {
 function TodoItem(props) {
 	let todo = props.todo;
 	let project = props.project;
-	const [assignees, setAssignees] = useState()
+	const [assignees, setAssignees] = useState(todo.assignees.map(item => { return { value: item.id, label: item.name } }))
 	// console.log('TODOITEM', project.collaborators.concat(project.owner))
 	const toggleTodo = async (id) => {
 		if (!todo.completed) {
@@ -182,7 +186,7 @@ function TodoItem(props) {
 				'Content-Type': 'application/json',
 				'Authorization': `Token ${props.token}`
 			},
-			body: JSON.stringify({ assignees })
+			body: JSON.stringify({ assignees: assignees.map(item => item.value) })
 		})
 		const data = await resp.json()
 		if (data.status.ok) {

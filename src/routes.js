@@ -22,7 +22,6 @@ const ProtectedRoute = ({ location, path, component: Component, authenticator, .
                 ? <Component {...props} {...rest} />
                 : <Redirect to='/login' />
         )} />)
-    // }
 }
 
 
