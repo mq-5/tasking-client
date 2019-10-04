@@ -29,7 +29,7 @@ function NewTodo(props) {
 				content,
 				due_time: dueTime.toISOString(),
 				project_id: projectId,
-				labelList,
+				labelList: labelList.map(item => item.value),
 				priority
 			}
 			const resp = await fetch(`${props.URL}todos/new`, {

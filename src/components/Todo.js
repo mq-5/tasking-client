@@ -19,7 +19,7 @@ function EditTodo(props) {
 	const [content, setContent] = useState(todo.content)
 	const [dueTime, setDueTime] = useState(moment(todo.due_date))
 	const [projectId, setProjectId] = useState(todo.project.id)
-	const [labelList, setLabels] = useState(todo.labels)
+	const [labelList, setLabels] = useState(todo.labels.map(item => { return { value: item.id, label: item.name } }))
 	const [priority, setPriorityId] = useState(todo.priority && todo.priority.id)
 	// console.log(todo.content, dueTime, 'now', moment(), dueTime < moment())
 	const postTodo = async () => {
@@ -29,7 +29,7 @@ function EditTodo(props) {
 				content,
 				due_time: dueTime.toISOString(),
 				project_id: projectId,
-				labelList,
+				labelList: labelList.map(item => item.value),
 				priority
 			}
 			const resp = await fetch(`${props.URL}todos/edit/${todo.id}`, {

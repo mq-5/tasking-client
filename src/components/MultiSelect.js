@@ -12,10 +12,7 @@ export default function MultiSelect(props) {
             components={animatedComponents}
             isMulti
             defaultValue={props.defaultValue}
-            onChange={e => {
-                console.log('tirrreed', e && e.map(item => item.value), props.defaultValue);
-                props.setValue(e ? e.map(item => item.value) : [])
-            }}
+            onChange={e => { props.setValue(e ? e : []) }}
             options={props.options}
         />
     );
