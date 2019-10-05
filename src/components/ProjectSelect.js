@@ -21,14 +21,12 @@ function Project(props) {
                     <Input type="select"
                         className="selectpicker"
                         defaultValue={props.default_project ? props.default_project.id : props.defaultValue}
-                        onChange={e => props.setProjectId(e.target.value)}>
+                        onChange={e => props.setProjectId(parseInt(e.target.value))}>
                         {props.projects.map(project => {
                             return <option value={project.id}>
                                 {project.name} </option>
                         })}
                     </Input>
-                    {/* <Select options={props.projects.map(item => { return { value: item.id, label: item.name } })}
-                        onChange={e => console.log(e.value)} /> */}
                 </PopoverBody>
             </UncontrolledPopover>
         </div>

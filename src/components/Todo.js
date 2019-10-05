@@ -7,24 +7,37 @@ import {
 import Datetime from 'react-datetime';
 import moment from "moment";
 
-import MultiSelect from './MultiSelect'
-import Priority from './PrioritySelect'
-import Label from './LabelSelect'
-import Project from './ProjectSelect'
+import MultiSelect from './MultiSelect';
+import Priority from './PrioritySelect';
+import Label from './LabelSelect';
+import Project from './ProjectSelect';
 
 
 function EditTodo(props) {
 	let todo = props.todo
-	// console.log('SETTODOO1111', todo.content)
 	const [modalToggle, setModalToggle] = useState(false);
 	const [content, setContent] = useState(todo.content)
-	const [dueTime, setDueTime] = useState(moment(todo.due_date))
+	const [dueTime, setDueTime] = useState(moment(todo.due_date)._d)
 	const [projectId, setProjectId] = useState(todo.project.id)
 	const [labelList, setLabels] = useState(todo.labels.map(item => { return { value: item.id, label: item.name } }))
 	const [priority, setPriorityId] = useState(todo.priority && todo.priority.id)
-	//console.log(todo.content, dueTime, 'now', moment(), dueTime < moment())
+
+	// let state = { content, dueTime, projectId, labelList, priority }
+	// console.log('SETTODOO1111', state)
+
+	const resetState = () => {
+		setContent(todo.content)
+		setDueTime(moment(todo.due_date)._d)
+		setProjectId(todo.project.id)
+		setLabels(todo.labels.map(item => { return { value: item.id, label: item.name } }))
+		setProjectId(todo.priority && todo.priority.id)
+	}
+
+	React.useEffect(() => {
+		resetState()
+	}, [todo])
+
 	const postTodo = async () => {
-		// console.log('SETTODOOOOO', priority)
 		if (dueTime > moment()) {
 			let info = {
 				content,
@@ -94,9 +107,9 @@ function EditTodo(props) {
 							<FormGroup className="col-md-3">
 								<label>Due Date</label>
 								<Datetime
-									defaultValue={moment(todo.due_date)}
+									defaultValue={moment(todo.due_date)._d}
 									inputProps={{ style: { width: '10rem' } }}
-									onChange={(e) => { if (e._d) setDueTime(e._d) }}
+									onChange={(e) => { console.log(e._d); if (e._d) setDueTime(e._d) }}
 								/>
 							</FormGroup>
 						</div>
@@ -123,7 +136,7 @@ function TodoItem(props) {
 	let todo = props.todo;
 	let project = props.project;
 	const [assignees, setAssignees] = useState(todo.assignees.map(item => { return { value: item.id, label: item.name } }))
-	// console.log('TODOITEM', project.collaborators.concat(project.owner))
+	// console.log('TODOITEM', todo.content)
 	const toggleTodo = async (id) => {
 		if (!todo.completed) {
 			const resp = await fetch(`${props.URL}todos/complete/${id}`, {
@@ -219,7 +232,9 @@ function TodoItem(props) {
 					<i className="nc-icon nc-calendar-60 mx-1" />{moment(todo.due_date).format('lll')}</span>
 				<br />
 				<small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
-					<i className="nc-icon nc-box mr-1" /> {todo.project.name}
+					<i className="nc-icon nc-box mr-1" />
+					<a style={{ color: '#333333' }}
+						href={`/main/projects/${todo.project.id}/`}>{todo.project.name}</a>
 				</small>
 				{project && <><Button className='p-0 btn-link' id={`pop-${todo.id}`} data-toggle='popover'
 				>
@@ -261,4 +276,3 @@ function TodoItem(props) {
 }
 
 export default TodoItem;
-

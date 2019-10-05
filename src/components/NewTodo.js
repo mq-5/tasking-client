@@ -14,13 +14,28 @@ import Project from './ProjectSelect'
 
 function NewTodo(props) {
 	let { default_project } = { ...props }
-	// console.log('SETTODOO1111', props)
+
 	const [modalToggle, setModalToggle] = useState(false);
-	const [content, setContent] = useState()
+	const [content, setContent] = useState(null)
 	const [dueTime, setDueTime] = useState(null)
 	const [projectId, setProjectId] = useState(default_project.id)
 	const [labelList, setLabels] = useState([])
-	const [priority, setPriorityId] = useState()
+	const [priority, setPriorityId] = useState(null)
+
+	// let state = { content, dueTime, projectId, labelList, priority }
+	// console.log('newtodo', state, default_project)
+
+	const resetState = () => {
+		setContent(null)
+		setDueTime(null)
+		setProjectId(default_project.id)
+		setLabels([])
+		setPriorityId(null)
+	}
+
+	React.useEffect(() => {
+		resetState()
+	}, [modalToggle])
 
 	const postTodo = async () => {
 		// console.log('SETTODOOOOO', priority)
@@ -42,7 +57,7 @@ function NewTodo(props) {
 				body: JSON.stringify(todo)
 			})
 			const data = await resp.json()
-			console.log(data, moment(data.time).toLocaleString(), moment(data.time))
+			console.log(data)
 			if (data.status.ok) {
 				setModalToggle(false)
 				setDueTime(null)
