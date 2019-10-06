@@ -23,7 +23,7 @@ function EditTodo(props) {
 	const [priority, setPriorityId] = useState(todo.priority && todo.priority.id)
 
 	let state = { content, dueTime, projectId, labelList, priority }
-	console.log('SETTODOO1111', state)
+	// console.log('SETTODOO1111', state)
 
 	const resetState = () => {
 		setContent(todo.content)
@@ -118,8 +118,9 @@ function EditTodo(props) {
 								priorities={props.data.priorities} defaultValue={todo.priority && todo.priority.id} />
 							<Label {...props} setLabels={setLabels} labels={props.data.labels}
 								labelList={todo.labels.map(item => { return { value: item.id, label: item.name } })} />
-							<Project {...props} setProjectId={setProjectId} projects={props.data.projects}
-								defaultValue={todo.project.id} />
+							<Project {...props} setProjectId={setProjectId}
+								projects={props.data.projects.my_projects.concat(props.data.projects.shared)}
+								defaultValue={todo.project.id} disabled={props.project.owner.id !== props.data.user.id} />
 							<Button color="danger" type='submit' className='ml-auto mr-3'>
 								Submit
 							</Button>
@@ -134,9 +135,9 @@ function EditTodo(props) {
 
 function TodoItem(props) {
 	let todo = props.todo;
-	let project = props.project;
+	let project = props.data.projects.my_projects.filter(p => p.id === todo.project.id)[0] || props.data.projects.shared.filter(p => p.id === todo.project.id)[0];
+	console.log('TODOITEM', project)
 	const [assignees, setAssignees] = useState(todo.assignees.map(item => { return { value: item.id, label: item.name } }))
-	// console.log('TODOITEM', todo.content)
 	const toggleTodo = async (id) => {
 		if (!todo.completed) {
 			const resp = await fetch(`${props.URL}todos/complete/${id}`, {
@@ -149,7 +150,6 @@ function TodoItem(props) {
 			const data = await resp.json()
 			if (data.status.ok) {
 				props.fetch()
-				console.log('completed', data)
 			} else {
 				alert('Error occurs')
 			}
@@ -164,7 +164,6 @@ function TodoItem(props) {
 			const data = await resp.json()
 			if (data.status.ok) {
 				props.fetch()
-				console.log('uncompleted', data)
 			} else {
 				alert('Error occurs')
 			}
@@ -183,7 +182,6 @@ function TodoItem(props) {
 		const data = await resp.json()
 		if (data.status.ok) {
 			props.fetch()
-			console.log('deleted', data)
 		} else {
 			alert(`Message: ${data.status.message} `)
 		}
@@ -191,7 +189,6 @@ function TodoItem(props) {
 
 	const assign = async (e, id) => {
 		e.preventDefault();
-		console.log('RUNNING', id)
 		const resp = await fetch(`${props.URL}todos/assign/${id}`, {
 			method: 'POST',
 			headers: {
@@ -213,7 +210,7 @@ function TodoItem(props) {
 	return (
 		<div className={`todo-item d-flex ${todo.completed ? 'checked' : null}`} style={{ flexWrap: 'wrap' }}>
 			<FormGroup check>
-				<Button className='mx-2 p-0' color='neutral'
+				<Button className='mx-2 my-0 p-0' color='neutral'
 					onClick={() => toggleTodo(todo.id)}>
 					<i className={`fa fa-${todo.completed ? 'check-' : ''}circle-o`}
 						style={{ color: todo.completed ? 'lightgray' : 'grey', fontSize: '1.2rem' }}
@@ -234,7 +231,7 @@ function TodoItem(props) {
 				<small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
 					<i className="nc-icon nc-box mr-1" />
 					<a style={{ color: '#333333' }}
-						href={`/main/projects/${todo.project.id}/`}>{todo.project.name}</a>
+						href={`/main/projects/${project.id}/`}>{project.name}</a>
 				</small>
 				{project && <><Button className='p-0 btn-link' id={`pop-${todo.id}`} data-toggle='popover'
 				>
@@ -257,14 +254,15 @@ function TodoItem(props) {
 							<Button size="sm" color='danger' onClick={e => assign(e, todo.id)} className='mt-2'>Ok</Button>
 						</PopoverBody>
 					</UncontrolledPopover> </>}
-				{todo.assignees.map(p => <Badge pill color='primary' title={p.name} style={{ padding: '0.3rem 0.5rem' }}>{p.name[0]}</Badge>)}
+				{todo.assignees.map(p => <Badge className='ml-1' pill color='primary' title={p.name} style={{ padding: '0.3rem 0.5rem' }}>
+					{p.name[0]}</Badge>)}
 			</FormGroup>
 			<div className='ml-auto align-items-center d-flex'>
 				{todo.labels.map(label =>
 					<Badge href="#" pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
 						{label.name}</Badge>
 				)}
-				<EditTodo {...props} className="p-0 btn-link" />
+				<EditTodo {...props} project={project} className="p-0 btn-link" />
 				<Button className='p-0 btn-link' type='button' onClick={() => deleteTodo(todo.id)}>
 					<i className="fa fa-trash-o" aria-hidden="true"></i>
 				</Button><br />

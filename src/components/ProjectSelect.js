@@ -20,7 +20,8 @@ function Project(props) {
                 <PopoverBody style={{ minWidth: '8rem' }}>
                     <Input type="select"
                         className="selectpicker"
-                        defaultValue={props.default_project ? props.default_project.id : props.defaultValue}
+                        disabled={props.disabled}
+                        defaultValue={props.defaultValue ? props.defaultValue : props.default_project.id}
                         onChange={e => props.setProjectId(parseInt(e.target.value))}>
                         {props.projects.map(project => {
                             return <option value={project.id}>

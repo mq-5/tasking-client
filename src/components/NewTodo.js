@@ -14,21 +14,22 @@ import Project from './ProjectSelect'
 
 function NewTodo(props) {
 	let { default_project } = { ...props }
+	const id = parseInt(window.location.pathname.split('/')[3]);
+	let projects = props.projects.my_projects.concat(props.projects.shared)
 
 	const [modalToggle, setModalToggle] = useState(false);
 	const [content, setContent] = useState(null)
 	const [dueTime, setDueTime] = useState(null)
-	const [projectId, setProjectId] = useState(default_project.id)
+	const [projectId, setProjectId] = useState(id ? id : default_project.id)
 	const [labelList, setLabels] = useState([])
 	const [priority, setPriorityId] = useState(null)
 
-	let state = { content, dueTime, projectId, labelList, priority }
-	console.log('newtodo', state, default_project)
+	// let state = { content, dueTime, projectId, labelList, priority }
 
 	const resetState = () => {
 		setContent(null)
 		setDueTime(null)
-		setProjectId(default_project.id)
+		setProjectId(id ? id : default_project.id)
 		setLabels([])
 		setPriorityId(null)
 	}
@@ -122,7 +123,7 @@ function NewTodo(props) {
 						<div className='form-row'>
 							<Priority {...props} setPriorityId={setPriorityId} />
 							<Label {...props} setLabels={setLabels} labelList={labelList} />
-							<Project {...props} setProjectId={setProjectId} />
+							<Project {...props} setProjectId={setProjectId} defaultValue={id} projects={projects} />
 							<Button color="danger" type='submit' className='ml-auto mr-3'>
 								Submit
 							</Button>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button, FormGroup, Input, Modal, Form } from "reactstrap";
 import ColorSelect from "./ColorDotSelect";
 
-const colors = ['#51cbce', '#2ba9cd', '#ff8f5e', '#fbc658', '#f5593d', '#f33816', '#c8c8c8']
+const colors = ['#51cbce', '#2ba9cd', '#ff8f5e', '#3b5998', '#fbc658', '#f5593d', '#6bd098', '#f33816', '#c8c8c8']
 function NewLabel(props) {
     const [toggleModal, setToggleModal] = useState(false);
     const [name, setName] = useState()
@@ -12,6 +12,7 @@ function NewLabel(props) {
     const createLabel = async (e) => {
         e.preventDefault()
         if (colors.includes(color)) {
+            setToggleModal(false)
             let label = { name, color }
             const resp = await fetch(`${props.URL}labels/new`, {
                 method: 'POST',
@@ -25,7 +26,6 @@ function NewLabel(props) {
             const data = await resp.json()
             console.log('LABELLLLL', data)
             if (data.status.ok) {
-                setToggleModal(false)
                 props.fetch()
             } else {
                 alert('Error!')

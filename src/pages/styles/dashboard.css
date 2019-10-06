@@ -12,12 +12,12 @@ h1 {
     height: calc(100vh - 60px);
     /* overflow-y: h; */
     overflow-x: hidden;
-    line-height: 1;
     color: grey;
 }
 
 .sidebar .nav-link {
     padding: 0.6rem 1.2rem;
+    line-height: 1;
     /* color: white; */
 }
 
@@ -44,12 +44,13 @@ h1 {
 
 .sidebar h5 {
     font-weight: 400;
-    /* font-style: italic; */
+    text-transform: uppercase;
+    margin-bottom: 1rem;
 }
 .sidebar a{
-    color: grey;
-    font-size: 12px;
-    text-transform: uppercase;
+    color: #66615b;
+    font-size: 0.8rem;
+    /* text-transform: uppercase; */
     font-weight: bold;
     padding: 0 15%;
 }
@@ -57,7 +58,8 @@ h1 {
 .sidebar a:hover,
 .sidebar a:focus {
     /* color: rgb(252, 127, 105) !important; */
-    color: #333333 !important;
+    color: #c0c1c2 !important;
+    text-decoration: underline;   
 }
 
 #new-project {

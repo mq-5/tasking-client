@@ -9,9 +9,9 @@ function Todos(props) {
 	const data = props.data;
 	let todos, header, project;
 	try {
-		if (id) {
+		if (props.match.path.includes('projects')) {
 			try {
-				project = data.projects.filter(p => p.id === parseInt(id))[0] || data.shared_projects.filter(p => p.id === parseInt(id))[0]
+				project = data.projects.my_projects.filter(p => p.id === parseInt(id))[0] || data.projects.shared.filter(p => p.id === parseInt(id))[0]
 				todos = project.todos;
 				let collabs = project.collaborators.length;
 				header = (
@@ -29,6 +29,7 @@ function Todos(props) {
 			} catch {
 				todos = null
 			}
+
 		} else if (props.match.path.includes('today')) {
 			todos = data.today
 			header = <h3 className='mb-3'><strong>{'today'.toUpperCase()}</strong></h3>
@@ -39,7 +40,7 @@ function Todos(props) {
 		}
 		return (<>
 			{header}
-			{todos && todos.map(todo => <TodoItem todo={todo} {...props} project={project} />)}</>
+			{todos && todos.map(todo => <TodoItem todo={todo} {...props} />)}</>
 		)
 	}
 	catch {
