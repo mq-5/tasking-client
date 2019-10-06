@@ -30,7 +30,7 @@ function EditTodo(props) {
 		setDueTime(moment(todo.due_date)._d)
 		setProjectId(todo.project.id)
 		setLabels(todo.labels.map(item => { return { value: item.id, label: item.name } }))
-		setProjectId(todo.priority && todo.priority.id)
+		setPriorityId(todo.priority && todo.priority.id)
 	}
 
 	React.useEffect(() => {
