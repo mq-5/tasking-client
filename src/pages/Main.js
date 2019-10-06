@@ -126,7 +126,7 @@ class Main extends React.Component {
 	}
 
 	render() {
-		const { default_project, projects, labels, shared_projects } = { ...this.state.data }
+		const { default_project, projects, labels } = { ...this.state.data }
 		console.log('MAIN', this.state)
 		if (this.state.loading) {
 			return <div style={{ padding: '45vh 50vw' }}>
@@ -150,8 +150,8 @@ class Main extends React.Component {
 									</Link>
 								</NavLink>
 								<hr />
-								<h5 className=' text-center'>Projects</h5>
-								{projects.filter(p => p.id !== default_project.id).map(p => {
+								<h5 className=' text-center'>My Projects</h5>
+								{projects.my_projects.filter(p => p.id !== default_project.id).map(p => {
 									return <NavLink>
 										<Link to={`/main/projects/${p.id}/`}>
 											{p.name} <small>{p.todos.length}</small>
@@ -163,8 +163,8 @@ class Main extends React.Component {
 									<NewProject {...this.props} fetch={this.fetchData} />
 								</NavLink>
 								<hr />
-								<h5 className=' text-center'>Shared Projects</h5>
-								{shared_projects.map(p => {
+								<h5 className=' text-center'>Shared with me</h5>
+								{projects.shared.map(p => {
 									return <>
 										<NavLink>
 											<Link to={`/main/projects/${p.id}/`}>
@@ -181,7 +181,7 @@ class Main extends React.Component {
 								<UncontrolledCollapse toggler="#label">
 									{labels.map(l => {
 										return <NavLink>
-											<Link to='#' style={{ color: l.color }} >
+											<Link to={`/main/labels/${l.id}/`} style={{ color: l.color }} >
 												{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
 												<EditLabel {...this.props} fetch={this.fetchData} label={l} />
 											</Link>
@@ -191,22 +191,22 @@ class Main extends React.Component {
 										<NewLabel {...this.props} fetch={this.fetchData} />
 									</NavLink>
 								</UncontrolledCollapse>
-								{/* <hr />
+								<hr />
 								<h5 className='text-center' >
 									<a id="filter">	Filters <i class="nc-icon nc-minimal-down mx-2"></i></a>
 								</h5>
 								<UncontrolledCollapse toggler="#filter">
-									<NavLink>
+									{/* <NavLink>
 										<Link to='/main/completed'>
 											Completed
 										</Link>
-									</NavLink>
+									</NavLink> */}
 									<NavLink>
 										<Link to='/main/tome'>
 											Assigned to me
 										</Link>
 									</NavLink>
-								</UncontrolledCollapse> */}
+								</UncontrolledCollapse>
 							</OverflowScrolling>
 						</Col>
 						<Col className='body' md={9} sm={8} xs={12} >
@@ -214,6 +214,9 @@ class Main extends React.Component {
 								<Switch>
 									<Route path='/main/' exact render={() => <h1 className='m-5'>Hello {this.state.data.user.name}... </h1>} />
 									<Route path='/main/projects/:id/' render={(props) =>
+										<Todos {...props} {...this.state} fetch={this.fetchData} />} >
+									</Route>
+									<Route path='/main/labels/:id/' render={(props) =>
 										<Todos {...props} {...this.state} fetch={this.fetchData} />} >
 									</Route>
 									<Route path='/main/today/' render={(props) =>
