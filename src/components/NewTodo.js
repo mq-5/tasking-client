@@ -22,8 +22,8 @@ function NewTodo(props) {
 	const [labelList, setLabels] = useState([])
 	const [priority, setPriorityId] = useState(null)
 
-	// let state = { content, dueTime, projectId, labelList, priority }
-	// console.log('newtodo', state, default_project)
+	let state = { content, dueTime, projectId, labelList, priority }
+	console.log('newtodo', state, default_project)
 
 	const resetState = () => {
 		setContent(null)
@@ -113,7 +113,7 @@ function NewTodo(props) {
 							<FormGroup className="col-md-3">
 								<label>Due Date</label>
 								<Datetime
-									inputProps={{ placeholder: "Deadline", style: { width: '10rem' } }}
+									inputProps={{ placeholder: "Deadline", style: { width: '10rem' }, required: true }}
 									onChange={(e) => { if (e._d) setDueTime(e._d) }}
 									closeOnSelect={true}
 								/>

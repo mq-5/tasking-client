@@ -60,9 +60,13 @@ function Response(props) {
                         You are invited to join a project
                         </CardBody>
                     <CardFooter className='d-flex justify-content-around'>
-                        <Button onClick={() => setIsAccepted(false)} >Decline</Button>
                         <Button onClick={() => {
-                            setIsAccepted(true)
+                            setIsAccepted(false);
+                            localStorage.removeItem('from')
+                        }} >Decline</Button>
+                        <Button onClick={() => {
+                            setIsAccepted(true);
+                            localStorage.removeItem('from')
                         }} color='danger'>Accept</Button>
                     </CardFooter>
                 </Card>

@@ -22,8 +22,8 @@ function EditTodo(props) {
 	const [labelList, setLabels] = useState(todo.labels.map(item => { return { value: item.id, label: item.name } }))
 	const [priority, setPriorityId] = useState(todo.priority && todo.priority.id)
 
-	// let state = { content, dueTime, projectId, labelList, priority }
-	// console.log('SETTODOO1111', state)
+	let state = { content, dueTime, projectId, labelList, priority }
+	console.log('SETTODOO1111', state)
 
 	const resetState = () => {
 		setContent(todo.content)
