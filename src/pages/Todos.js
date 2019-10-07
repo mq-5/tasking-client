@@ -21,7 +21,7 @@ function Todos(props) {
 							<small className='ml-3'>Shared with <Badge id="sharing" className='mx-1' pill>{collabs}</Badge></small>
 							{/* <small><a>Change</a></small> */}
 							<UncontrolledTooltip placement="bottom" target="sharing">
-								{project.collaborators.map(item => item.name)}
+								{project.collaborators.map(item => <li style={{ listStyleType: 'none' }}>{item.name}</li>)}
 							</UncontrolledTooltip> </>
 							: null}
 						<Share project_id={project.id} {...props} className='ml-auto' />
@@ -29,14 +29,17 @@ function Todos(props) {
 			} catch {
 				todos = null
 			}
-
 		} else if (props.match.path.includes('today')) {
 			todos = data.today
 			header = <h3 className='mb-3'><strong>{'today'.toUpperCase()}</strong></h3>
 		} else if (props.match.path.includes('search')) {
 			let key = props.match.params.key;
-			todos = data.todos.filter(item => item.content.includes(key))
+			todos = data.todos.filter(item => item.content.toLowerCase().includes(key.toLowerCase()))
 			header = <h3 className='mb-3'><strong>{'search results'.toUpperCase()} for "{key}"</strong></h3>
+		} else if (props.match.path.includes('labels')) {
+			let id = props.match.params.id;
+			todos = data.todos.filter(todo => todo.labels.map(label => label.id).includes(parseInt(id)));
+			header = <h3 className='mb-3'><strong>{`Tagged`.toUpperCase()}</strong></h3>
 		}
 		return (<>
 			{header}

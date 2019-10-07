@@ -259,7 +259,7 @@ function TodoItem(props) {
 			</FormGroup>
 			<div className='ml-auto align-items-center d-flex'>
 				{todo.labels.map(label =>
-					<Badge href="#" pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
+					<Badge href={`/main/labels/${label.id}`} pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
 						{label.name}</Badge>
 				)}
 				<EditTodo {...props} project={project} className="p-0 btn-link" />

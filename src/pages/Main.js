@@ -78,7 +78,6 @@ function NavBar(props) {
 								<Link style={{ color: 'white', marginLeft: '1rem' }} to='/main/profile'>{props.user.name}</Link>
 							</NavItem>
 							<NewTodo {...props} className='btn-link my' />
-
 							<NavItem >
 								<Button
 									className="btn-link my ml-2"
@@ -89,6 +88,7 @@ function NavBar(props) {
 							</NavItem>
 						</FormGroup>
 					</Form>
+
 				</UncontrolledCollapse>
 			</Navbar>
 		</>
@@ -191,22 +191,22 @@ class Main extends React.Component {
 										<NewLabel {...this.props} fetch={this.fetchData} />
 									</NavLink>
 								</UncontrolledCollapse>
-								<hr />
+								{/* <hr />
 								<h5 className='text-center' >
 									<a id="filter">	Filters <i class="nc-icon nc-minimal-down mx-2"></i></a>
 								</h5>
 								<UncontrolledCollapse toggler="#filter">
-									{/* <NavLink>
+									<NavLink>
 										<Link to='/main/completed'>
 											Completed
 										</Link>
-									</NavLink> */}
+									</NavLink>
 									<NavLink>
-										<Link to='/main/tome'>
+										<Link onClick={e => console.log('hehe', e)}>
 											Assigned to me
 										</Link>
 									</NavLink>
-								</UncontrolledCollapse>
+								</UncontrolledCollapse> */}
 							</OverflowScrolling>
 						</Col>
 						<Col className='body' md={9} sm={8} xs={12} >
