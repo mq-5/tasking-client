@@ -137,8 +137,8 @@ function EditTodo(props) {
 function TodoItem(props) {
 	let todo = props.todo;
 	let project = props.data.projects.my_projects.filter(p => p.id === todo.project.id)[0] || props.data.projects.shared.filter(p => p.id === todo.project.id)[0];
-	console.log('TODOITEM', project)
 	const [assignees, setAssignees] = useState(todo.assignees.map(item => { return { value: item.id, label: item.name } }))
+	console.log('TODOITEM', todo.priority && todo.priority.color)
 	const toggleTodo = async (id) => {
 		if (!todo.completed) {
 			const resp = await fetch(`${props.URL}todos/complete/${id}`, {
@@ -250,7 +250,7 @@ function TodoItem(props) {
 								options={project.collaborators.concat(project.owner).map(item => {
 									return { value: item.id, label: item.name }
 								})}
-								defaultValue={todo.assignees}
+								defaultValue={todo.assignees.map(item => { return { value: item.id, label: item.name } })}
 								setValue={setAssignees} />
 							<Button size="sm" color='danger' onClick={e => assign(e, todo.id)} className='mt-2'>Ok</Button>
 						</PopoverBody>

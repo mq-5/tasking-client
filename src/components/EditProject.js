@@ -6,6 +6,10 @@ function EditProject(props) {
     const [toggleModal, setToggleModal] = useState(false);
     const [name, setName] = useState(current.name)
 
+    React.useEffect(() => {
+        setName(current.name)
+    }, [current])
+
     const createProject = async (e) => {
         e.preventDefault()
         const project = { name }

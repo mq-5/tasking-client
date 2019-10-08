@@ -83,7 +83,7 @@ nav .btn.btn-link {
 .todo-item button {
     font-size: 1rem;
 }
-.todo-item i,
+.todo-item .btn.btn-link i,
 .sidebar .btn.btn-link {
     color: gray !important;
 }

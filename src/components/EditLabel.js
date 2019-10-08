@@ -11,6 +11,11 @@ function EditLabel(props) {
     const [name, setName] = useState(current.name)
     const [color, setColor] = useState(current.color)
 
+    React.useEffect(() => {
+        setName(current.name)
+        setColor(current.color)
+    }, [current])
+
     const editLabel = async (e) => {
         e.preventDefault()
         if (colors.includes(color)) {
