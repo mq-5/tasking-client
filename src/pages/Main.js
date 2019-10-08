@@ -156,6 +156,7 @@ class Main extends React.Component {
 										<Link to={`/main/projects/${p.id}/`}>
 											{p.name} <small>{p.todos.length}</small>
 											<EditProject {...this.props} fetch={this.fetchData} project={p} />
+											{p.collaborators.length > 0 && <i class="fa fa-user" aria-hidden="true"></i>}
 										</Link>
 									</NavLink>
 								})}
@@ -180,7 +181,7 @@ class Main extends React.Component {
 								{/* </NavLink> */}
 								<UncontrolledCollapse toggler="#label">
 									{labels.map(l => {
-										return <NavLink>
+										return <NavLink className='pb-0'>
 											<Link to={`/main/labels/${l.id}/`} style={{ color: l.color }} >
 												{l.name} <i className="fa fa-tag" aria-hidden="true"></i>
 												<EditLabel {...this.props} fetch={this.fetchData} label={l} />

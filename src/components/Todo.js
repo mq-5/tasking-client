@@ -4,6 +4,7 @@ import {
 	Modal, Form, Input, Badge, UncontrolledPopover,
 	PopoverHeader, PopoverBody
 } from 'reactstrap';
+import { Link } from 'react-router-dom'
 import Datetime from 'react-datetime';
 import moment from "moment";
 
@@ -228,10 +229,10 @@ function TodoItem(props) {
 				}}>
 					<i className="nc-icon nc-calendar-60 mx-1" />{moment(todo.due_date).format('lll')}</span>
 				<br />
-				<small style={{ textDecoration: 'underline', fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
+				<small style={{ fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
 					<i className="nc-icon nc-box mr-1" />
-					<a style={{ color: '#333333' }}
-						href={`/main/projects/${project.id}/`}>{project.name}</a>
+					<Link style={{ color: '#333333' }}
+						to={`/main/projects/${project.id}/`}>{project.name}</Link>
 				</small>
 				{project && <><Button className='p-0 btn-link' id={`pop-${todo.id}`} data-toggle='popover'
 				>
@@ -259,8 +260,8 @@ function TodoItem(props) {
 			</FormGroup>
 			<div className='ml-auto align-items-center d-flex'>
 				{todo.labels.map(label =>
-					<Badge href={`/main/labels/${label.id}`} pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
-						{label.name}</Badge>
+					<Badge pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
+						<Link to={`/main/labels/${label.id}`} >{label.name}</Link></Badge>
 				)}
 				<EditTodo {...props} project={project} className="p-0 btn-link" />
 				<Button className='p-0 btn-link' type='button' onClick={() => deleteTodo(todo.id)}>

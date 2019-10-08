@@ -82,7 +82,8 @@ h1 {
 .todo-item button {
     font-size: 1rem;
 }
-.todo-item .btn.btn-link {
+.todo-item .btn.btn-link,
+.sidebar .btn.btn-link {
     color: gray !important;
 }
 button.priority:hover, 
