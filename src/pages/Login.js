@@ -62,10 +62,9 @@ function Login(props) {
     } else {
       alert(`Failure: ${data.status.message}`)
     }
-    console.log(data.status.message)
   }
 
-  if (props.token) {
+  if (props.authenticated) {
     alert('You already logged in!')
     window.location.replace(window.location.origin)
   } else {

@@ -65,7 +65,7 @@ const Routes = (props) => {
                 <Switch>
                     <Route path="/" exact render={(props) => <LandingPage {...props} token={state.token} URL={URL} />} />
                     <Route path="/register" exact render={(props) => <Register {...props} token={state.token} URL={URL} />} />
-                    <Route path="/login" render={(props) => <Login {...props} token={state.token} URL={URL} />} />
+                    <Route path="/login" render={(props) => <Login {...props} authenticated={hasUser} token={state.token} URL={URL} />} />
                     <Route path="/forget" exact render={(props) => <ForgetPassword {...props} token={state.token} URL={URL} />} />
                     <Route path="/reset/:token" render={(props) => <NewPassword {...props} URL={URL} />} />
                     <ProtectedRoute path="/main" authenticator={hasUser} component={Main} token={state.token} URL={URL} />

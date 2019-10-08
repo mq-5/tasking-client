@@ -261,7 +261,7 @@ function TodoItem(props) {
 			<div className='ml-auto align-items-center d-flex'>
 				{todo.labels.map(label =>
 					<Badge pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
-						<Link to={`/main/labels/${label.id}`} >{label.name}</Link></Badge>
+						<Link to={`/main/labels/${label.id}`} style={{ color: 'white' }}>{label.name}</Link></Badge>
 				)}
 				<EditTodo {...props} project={project} className="p-0 btn-link" />
 				<Button className='p-0 btn-link' type='button' onClick={() => deleteTodo(todo.id)}>

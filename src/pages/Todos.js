@@ -18,12 +18,15 @@ function Todos(props) {
 					<div className='d-flex align-items-baseline'>
 						<h3 className='mb-3'><strong>{project.name.toUpperCase()}</strong></h3>
 						{collabs > 0 ? <>
-							<small className='ml-3'>Shared with <Badge id="sharing" className='mx-1' pill>{collabs}</Badge></small>
-							{/* <small><a>Change</a></small> */}
+							<small className='ml-3'>Shared with
+							{project.collaborators.map(p => <Badge className='ml-1' pill color='default' title={p.name} >
+								{p.name[0]}</Badge>)}</small>
+							{/* <Badge id="sharing" className='mx-1' pill>{collabs}</Badge>
+							<small><a>Change</a></small>
 							<UncontrolledTooltip placement="bottom" target="sharing">
 								{project.collaborators.map(item => <li style={{ listStyleType: 'none' }}>{item.name}</li>)}
-							</UncontrolledTooltip> </>
-							: null}
+							</UncontrolledTooltip>  */}
+						</> : null}
 						<Share project_id={project.id} {...props} className='ml-auto' />
 					</div>)
 			} catch {
