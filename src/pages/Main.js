@@ -74,8 +74,7 @@ function NavBar(props) {
 								<Input placeholder="Search tasks..." type="text" onChange={e => setKey(e.target.value)} />
 							</Form>
 							<NavItem>
-								{/* <NavItem style={{ color: 'white', marginLeft: '1rem' }}>{props.user.name}</NavItem> */}
-								<Link style={{ color: 'white', marginLeft: '1rem' }} to='/main/profile'>{props.user.name}</Link>
+								<Link style={{ color: 'white', marginLeft: '1rem', fontWeight: 'bold' }} to='/main/profile'>{props.user.name}</Link>
 							</NavItem>
 							<NewTodo {...props} className='btn-link my' />
 							<NavItem >
@@ -127,7 +126,7 @@ class Main extends React.Component {
 
 	render() {
 		const { default_project, projects, labels } = { ...this.state.data }
-		console.log('MAIN', this.state)
+		// console.log('MAIN', this.state.todos)
 		if (this.state.loading) {
 			return <div style={{ padding: '45vh 50vw' }}>
 				<Spinner style={{ width: '3rem', height: '3rem' }} color='danger' />
