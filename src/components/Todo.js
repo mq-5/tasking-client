@@ -229,9 +229,9 @@ function TodoItem(props) {
 				}}>
 					<i className="nc-icon nc-calendar-60 mx-1" />{moment(todo.due_date).format('lll')}</span>
 				<br />
-				<small style={{ fontStyle: 'italic', margin: '1rem', color: 'grey' }}>
+				<small style={{ margin: '1rem', color: 'grey' }}>
 					<i className="nc-icon nc-box mr-1" />
-					<Link style={{ color: '#333333' }}
+					<Link style={{ fontWeight: '500', fontStyle: 'italic', color: 'grey' }}
 						to={`/main/projects/${project.id}/`}>{project.name}</Link>
 				</small>
 				{project && <><Button className='p-0 btn-link' id={`pop-${todo.id}`} data-toggle='popover'
@@ -260,7 +260,7 @@ function TodoItem(props) {
 			</FormGroup>
 			<div className='ml-auto align-items-center d-flex'>
 				{todo.labels.map(label =>
-					<Badge pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1'>
+					<Badge pill style={{ fontSize: 9, backgroundColor: label.color }} className='mx-1 shadow-sm'>
 						<Link to={`/main/labels/${label.id}`} style={{ color: 'white' }}>{label.name}</Link></Badge>
 				)}
 				<EditTodo {...props} project={project} className="p-0 btn-link" />

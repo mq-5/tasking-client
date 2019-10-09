@@ -1,3 +1,7 @@
+.badge a{
+    font-weight: 700 !important;
+}
+
 a:visited {
     color: white;
 }
